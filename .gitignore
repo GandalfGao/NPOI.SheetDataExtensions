@@ -18,3 +18,4 @@ bin-release/
 # information for Eclipse / Flash Builder.
 /NPOI API Package Test/NPOI API Package/obj
 /NPOI API Package Test/NPOI API Package/bin
+/NPOI API Package Test/.vs
