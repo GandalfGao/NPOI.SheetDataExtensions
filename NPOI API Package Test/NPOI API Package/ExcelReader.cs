@@ -114,7 +114,7 @@ namespace NPOI_API_Package
                     DataRow dataRow = table.NewRow();
                     foreach (var columnConfig in columnConfigs)
                     {
-                        dataRow[columnConfig.ColumnMapping] = row.GetCell(columnConfig.ColumnIndex);
+                        dataRow[columnConfig.ColumnMapping] = row.GetCell(columnConfig.ColumnIndex).GetCellValue();
                     }
                     table.Rows.Add(dataRow);
                 }
