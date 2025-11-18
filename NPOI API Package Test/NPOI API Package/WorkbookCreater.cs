@@ -11,13 +11,13 @@ namespace NPOI_API_Package
     /// <summary>
     /// workbook对象创建器
     /// </summary>
-    public class WorkbookCreater
+    public static class WorkbookCreater
     {
         /// <summary>
-        /// 创建对象(应用于创建文件)
+        /// 创建Excel对象(应用于创建文件)
         /// </summary>
         /// <param name="excelType">Excel文件类型枚举</param>
-        /// <returns></returns>
+        /// <returns>Excel对象</returns>
         public static IWorkbook Create(ExcelType excelType)
         {
             IWorkbook workbook;
@@ -37,60 +37,26 @@ namespace NPOI_API_Package
         }
 
         /// <summary>
-        /// 创建对象(应用于读取文件)
+        /// 创建Excel对象(应用于加载文件)
         /// </summary>
-        /// <param name="file">文件路径</param>
-        /// <returns></returns>
+        /// <param name="file">文件路径参数</param>
+        /// <returns>Excel对象</returns>
+        /// <exception cref="ArgumentNullException">当文件路径参数为空或NULL时抛出ArgumentNullException异常</exception>
+        /// <exception cref="FileNotFoundException">当指定的文件不存在不存在时抛出FileNotFoundException异常</exception>
         public static IWorkbook Create(string file)
         {
-            //获取扩展名称
-            string extName = Path.GetExtension(file);
-
-            //校验扩展名称
-            if (string.IsNullOrEmpty(extName))
-            {
-                throw new ArgumentNullException(nameof(extName), "文件扩展名称不可以为空！");
-            }
-
-            //将扩展名称转换为枚举
-            ExcelType excelType = Enum.Parse<ExcelType>(extName);
-            //创建对象
-            IWorkbook workbook = Create(file, excelType);
-            return workbook;
-        }
-
-        /// <summary>
-        /// 创建对象(应用于读取文件)
-        /// </summary>
-        /// <param name="file">文件路径</param>
-        /// <param name="excelType">Excel文件类型枚举</param>
-        /// <returns></returns>
-        public static IWorkbook Create(string file, ExcelType excelType)
-        {
-            //校验file变量
+            //校验file参数
             if (string.IsNullOrEmpty(file))
             {
-                throw new ArgumentNullException(nameof(file), "file变量不可以为空！");
+                throw new ArgumentNullException(nameof(file), "文件参数不可以为空！");
             }
             if (!File.Exists(file))
             {
-                throw new ArgumentException($"当前文件不存在！file: {file}", nameof(file));
+                throw new FileNotFoundException("指定的文件不存在！", file);
             }
 
-            using var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-
-            IWorkbook workbook;
-            switch (excelType)
-            {
-                case ExcelType.Xls:
-                    workbook = new HSSFWorkbook(fs);
-                    break;
-                case ExcelType.Xlsx:
-                default:
-                    workbook = new XSSFWorkbook(fs);
-                    break;
-            }
-
+            //创建workbook对象
+            var workbook = WorkbookFactory.Create(file);
             return workbook;
         }
     }
