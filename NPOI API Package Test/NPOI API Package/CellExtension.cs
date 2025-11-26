@@ -12,11 +12,12 @@ namespace NPOI_API_Package
     public static class CellExtension
     {
         /// <summary>
-        /// 获取单元格值
+        /// 获取单元格的值
         /// </summary>
         /// <param name="cell">单元格</param>
-        /// <returns></returns>
-        public static object GetCellValue(this ICell cell)
+        /// <param name="formulaEvaluator">公式评估器对象</param>
+        /// <returns>单元格值</returns>
+        public static object GetCellValue(this ICell cell, IFormulaEvaluator? formulaEvaluator = null)
         {
             //校验cell对象是否为空
             if (cell == null)
@@ -24,9 +25,30 @@ namespace NPOI_API_Package
                 return string.Empty;
             }
 
+            var cellType = cell.CellType;
+
+            if (cellType == CellType.Formula)
+            {
+                if (formulaEvaluator != null)
+                {
+                    cellType = formulaEvaluator.EvaluateFormulaCell(cell);
+                }
+            }
+
+            var value = cell.GetCellValue(cellType);
+            return value;
+        }
+
+        /// <summary>
+        /// 获取单元格的值
+        /// </summary>
+        /// <param name="cell">单元格</param>
+        /// <param name="cellType">单元格类型</param>
+        /// <returns>单元格值</returns>
+        private static object GetCellValue(this ICell cell, CellType cellType)
+        {
             object value;
 
-            CellType cellType = cell.CellType;
             switch (cellType)
             {
                 case CellType.Boolean:
