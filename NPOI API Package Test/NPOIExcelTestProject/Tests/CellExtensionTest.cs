@@ -22,7 +22,7 @@ namespace NPOIExcelTestProject.Tests
         }
 
         /// <summary>
-        /// 当单元格对象为空时，获取单元格值应返回空字符串
+        /// 当单元格对象为空时，单元格值应返回空字符串
         /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsNull()
@@ -33,7 +33,7 @@ namespace NPOIExcelTestProject.Tests
         }
 
         /// <summary>
-        /// 当单元格类型为布尔值时，获取单元格值应返回对应的布尔值
+        /// 当单元格类型为布尔值时，单元格值应返回对应的布尔值
         /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsBoolean()
@@ -42,15 +42,17 @@ namespace NPOIExcelTestProject.Tests
 
             var cellTrue = row.GetCell(1);
             var valueTrue = cellTrue.GetCellValue();
+            Assert.Equal(CellType.Boolean, cellTrue.CellType);
             Assert.True((bool)valueTrue);
 
             var cellFalse = row.GetCell(2);
             var valueFalse = cellFalse.GetCellValue();
+            Assert.Equal(CellType.Boolean, cellFalse.CellType);
             Assert.False((bool)valueFalse);
         }
 
         /// <summary>
-        /// 当单元格类型为数字时，获取单元格值应返回对应的数字值
+        /// 当单元格类型为数字时，单元格值应返回对应的数字值
         /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsNumeric()
@@ -59,15 +61,17 @@ namespace NPOIExcelTestProject.Tests
 
             var cellInt = row.GetCell(1);
             var valueInt = cellInt.GetCellValue();
+            Assert.Equal(CellType.Numeric, cellInt.CellType);
             Assert.Equal(123, (double)valueInt);
 
             var cellDouble = row.GetCell(2);
             var valueDouble = cellDouble.GetCellValue();
+            Assert.Equal(CellType.Numeric, cellDouble.CellType);
             Assert.Equal(123.456, (double)valueDouble);
         }
 
         /// <summary>
-        /// 当单元格类型为日期或时间时，获取单元格值应返回对应的DateTime值
+        /// 当单元格类型为日期或时间时，单元格值应返回对应的DateTime值
         /// </summary>
         /// <remarks>
         /// NPOI中的DateUtil.IsCellDateFormatted函数并不能完全准确判断单元格是否为日期类型，
@@ -86,6 +90,9 @@ namespace NPOIExcelTestProject.Tests
             var cellTime = timeRow.GetCell(1);
             var valueTime = cellTime.GetCellValue();
 
+            Assert.Equal(CellType.Numeric, cellDate.CellType);
+            Assert.Equal(CellType.Numeric, cellTime.CellType);
+
             Assert.IsType<DateTime>(valueDate);
             Assert.IsType<DateTime>(valueTime);
 
@@ -96,7 +103,7 @@ namespace NPOIExcelTestProject.Tests
         }
 
         /// <summary>
-        /// 当单元格类型为文本时，获取单元格值应返回对应的字符串值
+        /// 当单元格类型为文本时，单元格值应返回对应的字符串值
         /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsString()
@@ -105,12 +112,13 @@ namespace NPOIExcelTestProject.Tests
             var cell = row.GetCell(1);
             var value = cell.GetCellValue();
 
+            Assert.Equal(CellType.String, cell.CellType);
             Assert.IsType<string>(value);
             Assert.Equal("Good", (string)value);
         }
 
         /// <summary>
-        /// 当单元格为空时，获取单元格值应返回空字符串
+        /// 当单元格为空时，单元格值应返回空字符串
         /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsEmpty()
@@ -119,9 +127,14 @@ namespace NPOIExcelTestProject.Tests
             var cell = row.GetCell(1);
             var value = cell.GetCellValue();
 
+            Assert.Equal(CellType.Blank, cell.CellType);
             Assert.IsType<string>(value);
             Assert.Equal(string.Empty, (string)value);
         }
+
+        [Fact]
+        public void Test_GetCellValue_WhenCellIsFormula()
+        { }
 
         #region 日期/时间单元格输出测试
 

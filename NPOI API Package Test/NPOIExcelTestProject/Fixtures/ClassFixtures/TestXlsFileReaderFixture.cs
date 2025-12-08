@@ -59,6 +59,10 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures
             timeRow = sheet.GetRow(i++);
             textRow = sheet.GetRow(i++);
             emptyRow = sheet.GetRow(i++);
+
+            int j = 0;
+            var sheet2 = workbook.GetSheetAt(1);
+
         }
 
         /// <summary>
