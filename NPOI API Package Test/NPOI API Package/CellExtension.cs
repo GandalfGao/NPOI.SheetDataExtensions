@@ -65,10 +65,16 @@ namespace NPOI_API_Package
                         value = cell.NumericCellValue;
                     }
                     break;
-                case CellType.Blank:
                 case CellType.Error:
-                case CellType.Formula:
+                    var errVal = cell.ErrorCellValue;
+                    var fErrVal = FormulaError.ForInt(errVal);
+                    value = fErrVal.String;
+                    break;
                 case CellType.String:
+                    value = cell.StringCellValue; 
+                    break;
+                case CellType.Blank:
+                case CellType.Formula:
                 default:
                     value = cell.ToString();
                     break;

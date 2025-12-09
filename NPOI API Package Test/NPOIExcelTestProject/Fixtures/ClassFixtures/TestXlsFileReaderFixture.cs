@@ -44,6 +44,27 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures
         private readonly IRow emptyRow;
 
         /// <summary>
+        /// 通过公式计算得到布尔值的行对象
+        /// </summary>
+        private readonly IRow fBoolRow;
+        /// <summary>
+        /// 通过公式计算得到数字值的行对象
+        /// </summary>
+        private readonly IRow fNumRow;
+        /// <summary>
+        /// 通过公式计算得到日期值的行对象
+        /// </summary>
+        private readonly IRow fDateRow;
+        /// <summary>
+        /// 通过公式计算得到错误值的行对象
+        /// </summary>
+        private readonly IRow fErrorRow;
+        /// <summary>
+        /// 通过公式计算得到字符串值的行对象
+        /// </summary>
+        private readonly IRow fStringRow;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         public TestXlsFileReaderFixture()
@@ -62,7 +83,11 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures
 
             int j = 0;
             var sheet2 = workbook.GetSheetAt(1);
-
+            fBoolRow = sheet2.GetRow(j++);
+            fNumRow = sheet2.GetRow(j++);
+            fDateRow = sheet2.GetRow(j++);
+            fErrorRow = sheet2.GetRow(j++);
+            fStringRow = sheet2.GetRow(j++);
         }
 
         /// <summary>
@@ -99,6 +124,31 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures
         /// 包含空数据的行属性
         /// </summary>
         public IRow EmptyRow => emptyRow;
+
+        /// <summary>
+        /// 通过公式计算得到布尔值的行属性
+        /// </summary>
+        public IRow FBoolRow => fBoolRow;
+
+        /// <summary>
+        /// 通过公式计算得到数字值的行属性
+        /// </summary>
+        public IRow FNumRow => fNumRow;
+
+        /// <summary>
+        /// 通过公式计算得到日期值的行属性
+        /// </summary>
+        public IRow FDateRow => fDateRow;
+
+        /// <summary>
+        /// 通过公式计算得到错误值的行对象
+        /// </summary>
+        public IRow FErrorRow => fErrorRow;
+
+        /// <summary>
+        /// 通过公式计算得到字符串值的行对象
+        /// </summary>
+        public IRow FStringRow => fStringRow;
 
         /// <summary>
         /// 销毁资源

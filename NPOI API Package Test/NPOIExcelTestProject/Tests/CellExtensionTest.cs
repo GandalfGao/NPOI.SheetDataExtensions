@@ -134,7 +134,82 @@ namespace NPOIExcelTestProject.Tests
 
         [Fact]
         public void Test_GetCellValue_WhenCellIsFormula()
-        { }
+        {
+            var formulaEvaluator =  testXlsFileReaderFixture.FormulaEvaluator;
+
+            //1. 布尔值
+            var boolCell_1 = testXlsFileReaderFixture.FBoolRow.GetCell(2);
+            var boolCell_2 = testXlsFileReaderFixture.FBoolRow.GetCell(3);
+            // a. 不通过公式计算器获取值
+            var boolCellVal1WithoutCalc = boolCell_1.GetCellValue();
+            var boolCellVal2WithoutCalc = boolCell_2.GetCellValue();
+            Assert.Equal(CellType.Formula, boolCell_1.CellType);
+            Assert.Equal(CellType.Formula, boolCell_2.CellType);
+            // 输出公式信息
+            outputHelper.WriteLine("布尔值输出: " + (string)boolCellVal1WithoutCalc + ", " + (string)boolCellVal2WithoutCalc);
+            // b. 通过公式计算器获取值
+            var boolCellVal1WithCalc = boolCell_1.GetCellValue(formulaEvaluator);
+            var boolCellVal2WithCalc = boolCell_2.GetCellValue(formulaEvaluator);
+            Assert.IsType<bool>(boolCellVal1WithCalc);
+            Assert.IsType<bool>(boolCellVal2WithCalc);
+            Assert.True((bool)boolCellVal1WithCalc);
+            Assert.False((bool)boolCellVal2WithCalc);
+
+            //2. 数字值
+            var numCell = testXlsFileReaderFixture.FNumRow.GetCell(2);
+            // a. 不通过公式计算器获取值
+            var numCellValWithoutCalc = numCell.GetCellValue();
+            Assert.Equal(CellType.Formula, numCell.CellType);
+            // 输出公式信息
+            outputHelper.WriteLine("数字值输出: " + (string)numCellValWithoutCalc);
+            // b. 通过公式计算器获取值
+            var numCellValWithCalc = numCell.GetCellValue(formulaEvaluator);
+            Assert.IsType<double>(numCellValWithCalc);
+            Assert.Equal(2, (double)numCellValWithCalc);
+
+            //3. 日期值
+            var dateCell = testXlsFileReaderFixture.FDateRow.GetCell(2);
+            // a. 不通过公式计算器获取值
+            var dateCellValWithoutCalc = dateCell.GetCellValue();
+            Assert.Equal(CellType.Formula, dateCell.CellType);
+            // 输出公式信息
+            outputHelper.WriteLine("日期值输出: " + (string)dateCellValWithoutCalc);
+            // b. 通过公式计算器获取值
+            var dateCellValWithCalc = dateCell.GetCellValue(formulaEvaluator);
+            Assert.IsType<DateTime>(dateCellValWithCalc);
+            var expectedDate = new DateTime(2025, 1, 1, 12, 0, 0);
+            Assert.Equal(expectedDate, (DateTime)dateCellValWithCalc);
+
+            //4. 错误值
+            var errorCell = testXlsFileReaderFixture.FErrorRow.GetCell(2);
+            // a. 不通过公式计算器获取值
+            var errorCellValWithoutCalc = errorCell.GetCellValue();
+            Assert.Equal(CellType.Formula, errorCell.CellType);
+            // 输出公式信息
+            outputHelper.WriteLine("错误值输出: " + (string)errorCellValWithoutCalc);
+            // b. 通过公式计算器获取值
+            var errorCellValWithCalc = errorCell.GetCellValue(formulaEvaluator);
+            Assert.IsType<string>(errorCellValWithCalc);
+            Assert.Equal("#DIV/0!", (string)errorCellValWithCalc);
+
+            //5. 文本值
+            var textCell = testXlsFileReaderFixture.FStringRow.GetCell(2);
+            var textCell2 = testXlsFileReaderFixture.FStringRow.GetCell(3);
+            // a. 不通过公式计算器获取值
+            var textCellValWithoutCalc = textCell.GetCellValue();
+            var textCellVal2WithoutCalc = textCell2.GetCellValue();
+            Assert.Equal(CellType.Formula, textCell.CellType);
+            Assert.Equal(CellType.Formula, textCell2.CellType);
+            // 输出公式信息
+            outputHelper.WriteLine("文本值输出: " + (string)textCellValWithoutCalc + ", 空字符串值输出: " + (string)textCellVal2WithoutCalc);
+            // b. 通过公式计算器获取值
+            var textCellValWithCalc = textCell.GetCellValue(formulaEvaluator);
+            var textCellVal2WithCalc = textCell2.GetCellValue(formulaEvaluator);
+            Assert.IsType<string>(textCellValWithCalc);
+            Assert.IsType<string>(textCellVal2WithCalc);
+            Assert.Equal("Good", (string)textCellValWithCalc);
+            Assert.Equal(string.Empty, (string)textCellVal2WithCalc);
+        }
 
         #region 日期/时间单元格输出测试
 
