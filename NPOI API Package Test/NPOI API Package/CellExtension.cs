@@ -71,7 +71,7 @@ namespace NPOI_API_Package
                     value = fErrVal.String;
                     break;
                 case CellType.String:
-                    value = cell.StringCellValue; 
+                    value = cell.StringCellValue;
                     break;
                 case CellType.Blank:
                 case CellType.Formula:

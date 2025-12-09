@@ -10,14 +10,17 @@ using Xunit.Abstractions;
 
 namespace NPOIExcelTestProject.Tests
 {
-    public class CellExtensionTest : IClassFixture<TestXlsFileReaderFixture>
+    /// <summary>
+    /// xls文件单元格扩展类测试
+    /// </summary>
+    public class XlsxCellExtensionTest : IClassFixture<TestXlsxFileReaderFixture>
     {
-        private readonly TestXlsFileReaderFixture testXlsFileReaderFixture;
+        private readonly TestXlsxFileReaderFixture testXlsxFileReaderFixture;
         private readonly ITestOutputHelper outputHelper;
 
-        public CellExtensionTest(TestXlsFileReaderFixture testXlsFileReaderFixture, ITestOutputHelper outputHelper)
+        public XlsxCellExtensionTest(TestXlsxFileReaderFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper)
         {
-            this.testXlsFileReaderFixture = testXlsFileReaderFixture;
+            this.testXlsxFileReaderFixture = testXlsxFileReaderFixture;
             this.outputHelper = outputHelper;
         }
 
@@ -38,7 +41,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_GetCellValue_WhenCellIsBoolean()
         {
-            var row = testXlsFileReaderFixture.BoolRow;
+            var row = testXlsxFileReaderFixture.BoolRow;
 
             var cellTrue = row.GetCell(1);
             var valueTrue = cellTrue.GetCellValue();
@@ -57,7 +60,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_GetCellValue_WhenCellIsNumeric()
         {
-            var row = testXlsFileReaderFixture.NumRow;
+            var row = testXlsxFileReaderFixture.NumRow;
 
             var cellInt = row.GetCell(1);
             var valueInt = cellInt.GetCellValue();
@@ -81,8 +84,8 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_GetCellValue_WhenCellIsDateTime()
         { 
-            var dateRow = testXlsFileReaderFixture.DateRow;
-            var timeRow = testXlsFileReaderFixture.TimeRow;
+            var dateRow = testXlsxFileReaderFixture.DateRow;
+            var timeRow = testXlsxFileReaderFixture.TimeRow;
 
             var cellDate = dateRow.GetCell(1);
             var valueDate = cellDate.GetCellValue();
@@ -108,7 +111,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_GetCellValue_WhenCellIsString()
         {
-            var row = testXlsFileReaderFixture.TextRow;
+            var row = testXlsxFileReaderFixture.TextRow;
             var cell = row.GetCell(1);
             var value = cell.GetCellValue();
 
@@ -123,7 +126,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_GetCellValue_WhenCellIsEmpty()
         {
-            var row = testXlsFileReaderFixture.EmptyRow;
+            var row = testXlsxFileReaderFixture.EmptyRow;
             var cell = row.GetCell(1);
             var value = cell.GetCellValue();
 
@@ -132,14 +135,17 @@ namespace NPOIExcelTestProject.Tests
             Assert.Equal(string.Empty, (string)value);
         }
 
+        /// <summary>
+        /// 当单元格为公式时，单元格值应返回公式本身或公式计算后的值
+        /// </summary>
         [Fact]
         public void Test_GetCellValue_WhenCellIsFormula()
         {
-            var formulaEvaluator =  testXlsFileReaderFixture.FormulaEvaluator;
+            var formulaEvaluator =  testXlsxFileReaderFixture.FormulaEvaluator;
 
             //1. 布尔值
-            var boolCell_1 = testXlsFileReaderFixture.FBoolRow.GetCell(2);
-            var boolCell_2 = testXlsFileReaderFixture.FBoolRow.GetCell(3);
+            var boolCell_1 = testXlsxFileReaderFixture.FBoolRow.GetCell(2);
+            var boolCell_2 = testXlsxFileReaderFixture.FBoolRow.GetCell(3);
             // a. 不通过公式计算器获取值
             var boolCellVal1WithoutCalc = boolCell_1.GetCellValue();
             var boolCellVal2WithoutCalc = boolCell_2.GetCellValue();
@@ -156,7 +162,7 @@ namespace NPOIExcelTestProject.Tests
             Assert.False((bool)boolCellVal2WithCalc);
 
             //2. 数字值
-            var numCell = testXlsFileReaderFixture.FNumRow.GetCell(2);
+            var numCell = testXlsxFileReaderFixture.FNumRow.GetCell(2);
             // a. 不通过公式计算器获取值
             var numCellValWithoutCalc = numCell.GetCellValue();
             Assert.Equal(CellType.Formula, numCell.CellType);
@@ -168,7 +174,7 @@ namespace NPOIExcelTestProject.Tests
             Assert.Equal(2, (double)numCellValWithCalc);
 
             //3. 日期值
-            var dateCell = testXlsFileReaderFixture.FDateRow.GetCell(2);
+            var dateCell = testXlsxFileReaderFixture.FDateRow.GetCell(2);
             // a. 不通过公式计算器获取值
             var dateCellValWithoutCalc = dateCell.GetCellValue();
             Assert.Equal(CellType.Formula, dateCell.CellType);
@@ -181,7 +187,7 @@ namespace NPOIExcelTestProject.Tests
             Assert.Equal(expectedDate, (DateTime)dateCellValWithCalc);
 
             //4. 错误值
-            var errorCell = testXlsFileReaderFixture.FErrorRow.GetCell(2);
+            var errorCell = testXlsxFileReaderFixture.FErrorRow.GetCell(2);
             // a. 不通过公式计算器获取值
             var errorCellValWithoutCalc = errorCell.GetCellValue();
             Assert.Equal(CellType.Formula, errorCell.CellType);
@@ -193,8 +199,8 @@ namespace NPOIExcelTestProject.Tests
             Assert.Equal("#DIV/0!", (string)errorCellValWithCalc);
 
             //5. 文本值
-            var textCell = testXlsFileReaderFixture.FStringRow.GetCell(2);
-            var textCell2 = testXlsFileReaderFixture.FStringRow.GetCell(3);
+            var textCell = testXlsxFileReaderFixture.FStringRow.GetCell(2);
+            var textCell2 = testXlsxFileReaderFixture.FStringRow.GetCell(3);
             // a. 不通过公式计算器获取值
             var textCellValWithoutCalc = textCell.GetCellValue();
             var textCellVal2WithoutCalc = textCell2.GetCellValue();
@@ -219,7 +225,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_Output_WhenCellIsDate()
         {
-            var row = testXlsFileReaderFixture.DateRow;
+            var row = testXlsxFileReaderFixture.DateRow;
             //获取日期单元格集合
             var dateCells = row.Cells;
             //遍历单元格集合
@@ -237,7 +243,7 @@ namespace NPOIExcelTestProject.Tests
         [Fact]
         public void Test_Output_WhenCellIsTime()
         { 
-            var row = testXlsFileReaderFixture.TimeRow;
+            var row = testXlsxFileReaderFixture.TimeRow;
             //获取时间单元格集合
             var timeCells = row.Cells;
             //遍历单元格集合
