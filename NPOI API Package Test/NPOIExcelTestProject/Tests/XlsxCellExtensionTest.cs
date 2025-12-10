@@ -1,6 +1,6 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI_API_Package;
-using NPOIExcelTestProject.Fixtures.ClassFixtures.Xlsx;
+using NPOIExcelTestProject.Fixtures.CollectionFixtures;
 using Org.BouncyCastle.Security.Certificates;
 using System;
 using System.Collections.Generic;
@@ -8,17 +8,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Xunit.Abstractions;
 
-namespace NPOIExcelTestProject.Tests.Xlsx
+namespace NPOIExcelTestProject.Tests
 {
     /// <summary>
     /// xls文件单元格扩展类测试
     /// </summary>
-    public class CellExtensionTest : IClassFixture<TestExcelFileReaderFixture>
+    [Collection(nameof(TestXlsxFileReaderCollection))]
+    public class XlsxCellExtensionTest
     {
-        private readonly TestExcelFileReaderFixture testXlsxFileReaderFixture;
+        private readonly TestXlsxFileReaderFixture testXlsxFileReaderFixture;
         private readonly ITestOutputHelper outputHelper;
 
-        public CellExtensionTest(TestExcelFileReaderFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper)
+        public XlsxCellExtensionTest(TestXlsxFileReaderFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper)
         {
             this.testXlsxFileReaderFixture = testXlsxFileReaderFixture;
             this.outputHelper = outputHelper;

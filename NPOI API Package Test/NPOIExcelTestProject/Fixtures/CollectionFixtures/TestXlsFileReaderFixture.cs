@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NPOIExcelTestProject.Fixtures.ClassFixtures.Xls
+namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
 {
     /// <summary>
     /// 测试Xls文件读取器夹具
     /// </summary>
-    public class TestExcelFileReaderFixture : IDisposable
+    public class TestXlsFileReaderFixture : IDisposable
     {
         /// <summary>
         /// Excel文件对象
@@ -67,7 +67,7 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures.Xls
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TestExcelFileReaderFixture()
+        public TestXlsFileReaderFixture()
         {
             workbook = WorkbookFactory.Create("TestExcelFiles\\TestXlsFile.xls");
             formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
@@ -158,4 +158,11 @@ namespace NPOIExcelTestProject.Fixtures.ClassFixtures.Xls
             workbook.Dispose();
         }
     }
+
+    /// <summary>
+    /// 夹具集合定义类
+    /// </summary>
+    [CollectionDefinition(nameof(TestXlsFileReaderCollection))]
+    public class TestXlsFileReaderCollection : ICollectionFixture<TestXlsFileReaderFixture>
+    { }
 }
