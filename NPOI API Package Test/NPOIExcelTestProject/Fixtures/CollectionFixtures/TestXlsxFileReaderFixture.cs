@@ -65,6 +65,11 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         private readonly IRow fStringRow;
 
         /// <summary>
+        /// sheet3对象
+        /// </summary>
+        private readonly ISheet sheet3;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         public TestXlsxFileReaderFixture()
@@ -88,7 +93,14 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
             fDateRow = sheet2.GetRow(j++);
             fErrorRow = sheet2.GetRow(j++);
             fStringRow = sheet2.GetRow(j++);
+
+            this.sheet3 = workbook.GetSheetAt(2);
         }
+
+        /// <summary>
+        /// Excel文件对象属性
+        /// </summary>
+        public IWorkbook Workbook => workbook;
 
         /// <summary>
         /// 公式评估器属性
@@ -149,6 +161,11 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// 通过公式计算得到字符串值的行对象
         /// </summary>
         public IRow FStringRow => fStringRow;
+
+        /// <summary>
+        /// Sheet3对象属性
+        /// </summary>
+        public ISheet Sheet3 => sheet3;
 
         /// <summary>
         /// 销毁资源
