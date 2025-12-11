@@ -8,7 +8,7 @@ namespace NPOIExcelTestProject.Params
     /// <summary>
     /// 列配置参数类
     /// </summary>
-    public class ColumnConfigData
+    public static class ColumnConfigData
     {
     }
 }

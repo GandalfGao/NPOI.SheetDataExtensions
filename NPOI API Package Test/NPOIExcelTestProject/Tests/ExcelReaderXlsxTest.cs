@@ -47,7 +47,11 @@ namespace NPOIExcelTestProject.Tests
             outputHelper.WriteLine(ex2.Message);
         }
 
-        public void Test_Read_WhenHasHeaderIsTrue(IEnumerable<ColumnConfigAttribute>? columnConfigs)
-        { }
+        [Fact]
+        public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty()
+        { 
+            var excelReader = new ExcelReader(testXlsxFileReaderFixture.Workbook, testXlsxFileReaderFixture.Sheet3);
+            var dataTable = excelReader.Read(firstRowIndex: 1, hasHeader: true);
+        }
     }
 }
