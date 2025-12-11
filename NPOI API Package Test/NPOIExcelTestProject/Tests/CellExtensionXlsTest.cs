@@ -14,12 +14,12 @@ namespace NPOIExcelTestProject.Tests
     /// xls文件单元格扩展类测试
     /// </summary>
     [Collection(nameof(TestXlsFileReaderCollection))]
-    public class XlsCellExtensionTest
+    public class CellExtensionXlsTest
     {
         private readonly TestXlsFileReaderFixture testXlsFileReaderFixture;
         private readonly ITestOutputHelper outputHelper;
 
-        public XlsCellExtensionTest(TestXlsFileReaderFixture testXlsFileReaderFixture, ITestOutputHelper outputHelper)
+        public CellExtensionXlsTest(TestXlsFileReaderFixture testXlsFileReaderFixture, ITestOutputHelper outputHelper)
         {
             this.testXlsFileReaderFixture = testXlsFileReaderFixture;
             this.outputHelper = outputHelper;
