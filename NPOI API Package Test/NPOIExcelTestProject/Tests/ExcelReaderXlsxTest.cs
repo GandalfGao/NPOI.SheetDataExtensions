@@ -29,7 +29,7 @@ namespace NPOIExcelTestProject.Tests
         public void Test_Read_WhenFirstRowIndexIsNegative()
         {
             var excelReader = new ExcelReader(testXlsxFileReaderFixture.Workbook, testXlsxFileReaderFixture.Sheet3);
-            var ex = Assert.Throws<ArgumentException>(() => excelReader.Read(firstRowIndex: -1));
+            var ex = Assert.Throws<ArgumentException>(() => excelReader.Read(rowsCount: 6, firstRowIndex: -1));
             outputHelper.WriteLine(ex.Message);
         }
 
@@ -40,10 +40,10 @@ namespace NPOIExcelTestProject.Tests
         public void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty()
         {
             var excelReader = new ExcelReader(testXlsxFileReaderFixture.Workbook, testXlsxFileReaderFixture.Sheet3);
-            var ex = Assert.Throws<ArgumentNullException>(() => excelReader.Read(hasHeader: false, columnConfigs: null));
+            var ex = Assert.Throws<ArgumentNullException>(() => excelReader.Read(rowsCount: 6, hasHeader: false, columnConfigs: null));
             outputHelper.WriteLine(ex.Message);
 
-            var ex2 = Assert.Throws<ArgumentNullException>(() => excelReader.Read(hasHeader: false, columnConfigs: []));
+            var ex2 = Assert.Throws<ArgumentNullException>(() => excelReader.Read(rowsCount: 6, hasHeader: false, columnConfigs: []));
             outputHelper.WriteLine(ex2.Message);
         }
 
@@ -51,7 +51,7 @@ namespace NPOIExcelTestProject.Tests
         public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty()
         { 
             var excelReader = new ExcelReader(testXlsxFileReaderFixture.Workbook, testXlsxFileReaderFixture.Sheet3);
-            var dataTable = excelReader.Read(firstRowIndex: 1, hasHeader: true);
+            var dataTable = excelReader.Read(rowsCount: 6, firstRowIndex: 1, hasHeader: true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -52,13 +53,14 @@ namespace NPOI_API_Package
         /// <summary>
         /// 读取数据
         /// </summary>
+        /// <param name="rowsCount">行数</param>
         /// <param name="firstRowIndex">首行索引(从0开始)</param>
         /// <param name="hasHeader">是否包含头部信息</param>
         /// <param name="columnConfigs">列信息配置集合</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">当firstRowIndex小于0时抛出</exception>
         /// <exception cref="ArgumentNullException">当hasHeader为false且columnConfigs为null或空时抛出</exception>
-        public DataTable Read(int firstRowIndex = 0, bool hasHeader = true, IEnumerable<ColumnConfigAttribute>? columnConfigs = null)
+        public DataTable Read(int rowsCount, int firstRowIndex = 0, bool hasHeader = true, IEnumerable<ColumnConfigAttribute>? columnConfigs = null)
         {
             //校验首行索引值
             if (firstRowIndex < 0)
@@ -107,17 +109,15 @@ namespace NPOI_API_Package
 
             //对table添加数据
             int startRowIndex = firstRowIndex + (hasHeader ? 1 : 0);
-            foreach (IRow row in sheet)
+            for (int i = startRowIndex; i < rowsCount + startRowIndex; i++)
             {
-                if (row.RowNum >= startRowIndex)
+                var row = sheet.GetRow(i);
+                DataRow dataRow = table.NewRow();
+                foreach (var columnConfig in columnConfigs)
                 {
-                    DataRow dataRow = table.NewRow();
-                    foreach (var columnConfig in columnConfigs)
-                    {
-                        dataRow[columnConfig.ColumnMapping] = row.GetCell(columnConfig.ColumnIndex).GetCellValue();
-                    }
-                    table.Rows.Add(dataRow);
+                    dataRow[columnConfig.ColumnMapping] = row.GetCell(columnConfig.ColumnIndex).GetCellValue();
                 }
+                table.Rows.Add(dataRow);
             }
 
             return table;
