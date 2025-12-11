@@ -8,7 +8,7 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
     /// <summary>
     /// 测试Xls文件读取器夹具
     /// </summary>
-    public class TestXlsxFileReaderFixture : IDisposable
+    public class TestFileReaderXlsxFixture : IDisposable
     {
         /// <summary>
         /// Excel文件对象
@@ -72,7 +72,7 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TestXlsxFileReaderFixture()
+        public TestFileReaderXlsxFixture()
         {
             workbook = WorkbookFactory.Create("TestExcelFiles\\TestXlsxFile.xlsx");
             formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
@@ -179,7 +179,7 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
     /// <summary>
     /// 夹具集合定义类
     /// </summary>
-    [CollectionDefinition(nameof(TestXlsxFileReaderCollection))]
-    public class TestXlsxFileReaderCollection : ICollectionFixture<TestXlsxFileReaderFixture>
+    [CollectionDefinition(nameof(TestFileReaderXlsxCollection))]
+    public class TestFileReaderXlsxCollection : ICollectionFixture<TestFileReaderXlsxFixture>
     { }
 }

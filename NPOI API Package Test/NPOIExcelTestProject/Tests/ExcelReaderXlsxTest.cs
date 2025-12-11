@@ -9,12 +9,12 @@ namespace NPOIExcelTestProject.Tests
     /// <summary>
     /// Excel读取器测试类
     /// </summary>
-    [Collection(nameof(TestXlsxFileReaderCollection))]
+    [Collection(nameof(TestFileReaderXlsxCollection))]
     public class ExcelReaderXlsxTest
     {
-        private readonly TestXlsxFileReaderFixture testXlsxFileReaderFixture;
+        private readonly TestFileReaderXlsxFixture testXlsxFileReaderFixture;
 
-        public ExcelReaderXlsxTest(TestXlsxFileReaderFixture testXlsxFileReaderFixture)
+        public ExcelReaderXlsxTest(TestFileReaderXlsxFixture testXlsxFileReaderFixture)
         {
             this.testXlsxFileReaderFixture = testXlsxFileReaderFixture;
         }
