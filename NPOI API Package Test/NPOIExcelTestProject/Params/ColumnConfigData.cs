@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xunit;
 
 namespace NPOIExcelTestProject.Params
 {
@@ -10,5 +11,13 @@ namespace NPOIExcelTestProject.Params
     /// </summary>
     public static class ColumnConfigData
     {
+        /// <summary>
+        /// 列配置为空的参数集合
+        /// </summary>
+        public static TheoryData<IEnumerable<ColumnConfigAttribute>?> EmptyColumnConfigParams { get; } =
+        [
+            null,
+            []
+        ];
     }
 }
