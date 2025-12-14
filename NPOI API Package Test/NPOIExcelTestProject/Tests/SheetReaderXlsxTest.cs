@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 namespace NPOIExcelTestProject.Tests
 {
     /// <summary>
-    /// Excel读取器测试类
+    /// 工作表读取器测试类
     /// </summary>
     [Collection(nameof(TestFileReaderXlsxCollection))]
     public class SheetReaderXlsxTest
@@ -87,6 +87,10 @@ namespace NPOIExcelTestProject.Tests
             }
         }
 
+        /// <summary>
+        /// 测试当hasHeader为false且columnConfigs不为空集合时的读取结果
+        /// </summary>
+        /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ColumnConfigData.ColumnConfigParams), MemberType = typeof(ColumnConfigData))]
         public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNotEmpty(IEnumerable<ColumnConfigAttribute> columnConfigs)

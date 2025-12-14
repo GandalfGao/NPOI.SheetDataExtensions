@@ -70,6 +70,11 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         private readonly ISheet sheet3;
 
         /// <summary>
+        /// sheet4对象
+        /// </summary>
+        private readonly ISheet sheet4;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         public TestFileReaderXlsxFixture()
@@ -95,6 +100,8 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
             fStringRow = sheet2.GetRow(j++);
 
             this.sheet3 = workbook.GetSheetAt(2);
+
+            this.sheet4 = workbook.GetSheetAt(3);
         }
 
         /// <summary>
@@ -166,6 +173,11 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// Sheet3对象属性
         /// </summary>
         public ISheet Sheet3 => sheet3;
+
+        /// <summary>
+        /// Sheet4对象属性
+        /// </summary>
+        public ISheet Sheet4 => sheet4;
 
         /// <summary>
         /// 销毁资源
