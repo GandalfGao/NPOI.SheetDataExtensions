@@ -19,5 +19,29 @@ namespace NPOIExcelTestProject.Params
             null,
             []
         ];
+
+        /// <summary>
+        /// 列配置非空的参数集合
+        /// </summary>
+        public static TheoryData<IEnumerable<ColumnConfigAttribute>> ColumnConfigParams { get; } =
+        [
+            [
+                new ColumnConfigAttribute
+                { 
+                    ColumnIndex = 1,
+                    ColumnMapping = "序号",
+                },
+                new ColumnConfigAttribute
+                {
+                    ColumnIndex = 2,
+                    ColumnMapping = "姓名",
+                },
+                new ColumnConfigAttribute
+                {
+                    ColumnIndex = 3,
+                    ColumnMapping = "年龄",
+                },
+            ]
+        ];
     }
 }

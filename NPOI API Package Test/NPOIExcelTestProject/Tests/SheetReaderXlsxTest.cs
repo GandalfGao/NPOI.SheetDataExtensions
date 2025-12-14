@@ -48,6 +48,10 @@ namespace NPOIExcelTestProject.Tests
             outputHelper.WriteLine("当hasHeader为false且columnConfigs为null或空集合时的异常信息: " + ex.Message);
         }
 
+        /// <summary>
+        /// 测试当hasHeader为true且columnConfigs为null或空集合时的读取结果
+        /// </summary>
+        /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ColumnConfigData.EmptyColumnConfigParams), MemberType = typeof(ColumnConfigData))]
         public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
@@ -83,6 +87,39 @@ namespace NPOIExcelTestProject.Tests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(ColumnConfigData.ColumnConfigParams), MemberType = typeof(ColumnConfigData))]
+        public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNotEmpty(IEnumerable<ColumnConfigAttribute> columnConfigs)
+        {
+            var sheetReader = new SheetReader(testXlsxFileReaderFixture.Sheet3);
+            //实际table数据
+            var actualTable = sheetReader.Read(6, firstRowIndex: 2, hasHeader: false, columnConfigs: columnConfigs);
+            //预计table数据
+            var expectedTable = CreateExpectedDataTableWithColumnConfigs();
+            //校验列数
+            Assert.Equal(expectedTable.Columns.Count, actualTable.Columns.Count);
+            //校验列信息
+            for (int i = 0; i < expectedTable.Columns.Count; i++)
+            {
+                var expectedColumn = expectedTable.Columns[i];
+                var actualColumn = actualTable.Columns[i];
+                Assert.Equal(expectedColumn.ColumnName, actualColumn.ColumnName);
+                Assert.Equal(expectedColumn.DataType, actualColumn.DataType);
+            }
+            //校验行数
+            Assert.Equal(expectedTable.Rows.Count, actualTable.Rows.Count);
+            //校验行数据
+            for (int i = 0; i < expectedTable.Rows.Count; i++)
+            {
+                var expectedRow = expectedTable.Rows[i];
+                var actualRow = actualTable.Rows[i];
+                for (int j = 0; j < expectedTable.Columns.Count; j++)
+                {
+                    Assert.Equal(expectedRow[j], actualRow[j]);
+                }
+            }
+        }
+
         /// <summary>
         /// 创建预期的数据表(不包含列配置信息)
         /// </summary>
@@ -92,9 +129,9 @@ namespace NPOIExcelTestProject.Tests
             var table = new DataTable();
 
             //添加列
-            table.Columns.Add("ID", typeof(double));
-            table.Columns.Add("Name", typeof(string));
-            table.Columns.Add("Age", typeof(double));
+            table.Columns.Add("ID");
+            table.Columns.Add("Name");
+            table.Columns.Add("Age");
 
             //添加行
             var row1 = table.NewRow();
@@ -102,23 +139,64 @@ namespace NPOIExcelTestProject.Tests
             table.Rows.Add(row1);
 
             var row2 = table.NewRow();
-            row1.ItemArray = [2, "李四", 21];
+            row2.ItemArray = [2, "李四", 21];
             table.Rows.Add(row2);
 
             var row3 = table.NewRow();
-            row1.ItemArray = [3, "王五", 25];
+            row3.ItemArray = [3, "王五", 25];
             table.Rows.Add(row3);
 
             var row4 = table.NewRow();
-            row1.ItemArray = [4, "赵六", 19];
+            row4.ItemArray = [4, "赵六", 19];
             table.Rows.Add(row4);
 
             var row5 = table.NewRow();
-            row1.ItemArray = [5, "田七", 23];
+            row5.ItemArray = [5, "田七", 23];
             table.Rows.Add(row5);
 
             var row6 = table.NewRow();
-            row1.ItemArray = [6, "刘八", 24];
+            row6.ItemArray = [6, "刘八", 24];
+            table.Rows.Add(row6);
+
+            return table;
+        }
+
+        /// <summary>
+        /// 创建预期的数据表(包含列配置信息)
+        /// </summary>
+        /// <returns></returns>
+        private DataTable CreateExpectedDataTableWithColumnConfigs()
+        {
+            var table = new DataTable();
+
+            //添加列
+            table.Columns.Add("序号");
+            table.Columns.Add("姓名");
+            table.Columns.Add("年龄");
+
+            //添加行
+            var row1 = table.NewRow();
+            row1.ItemArray = [1, "张三", 20];
+            table.Rows.Add(row1);
+
+            var row2 = table.NewRow();
+            row2.ItemArray = [2, "李四", 21];
+            table.Rows.Add(row2);
+
+            var row3 = table.NewRow();
+            row3.ItemArray = [3, "王五", 25];
+            table.Rows.Add(row3);
+
+            var row4 = table.NewRow();
+            row4.ItemArray = [4, "赵六", 19];
+            table.Rows.Add(row4);
+
+            var row5 = table.NewRow();
+            row5.ItemArray = [5, "田七", 23];
+            table.Rows.Add(row5);
+
+            var row6 = table.NewRow();
+            row6.ItemArray = [6, "刘八", 24];
             table.Rows.Add(row6);
 
             return table;

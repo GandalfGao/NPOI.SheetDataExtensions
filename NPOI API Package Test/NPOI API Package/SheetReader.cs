@@ -33,7 +33,7 @@ namespace NPOI_API_Package
         /// </summary>
         /// <param name="rowsCount">行数</param>
         /// <param name="firstRowIndex">首行索引(从0开始)</param>
-        /// <param name="hasHeader">是否包含头部信息</param>
+        /// <param name="hasHeader">是否包含头部信息(true: 读取数据时会以firstRowIndex基础上加1访问, false: 读取数据时直接以firstRowIndex基础上访问)</param>
         /// <param name="columnConfigs">列信息配置集合</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">当firstRowIndex小于0时抛出</exception>
