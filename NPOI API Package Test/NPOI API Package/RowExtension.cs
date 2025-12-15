@@ -15,7 +15,7 @@ namespace NPOI_API_Package
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        public static bool IsEmpty(this IRow row)
+        public static bool IsEmpty(this IRow? row)
         {
             if (row == null)
             {

@@ -6,9 +6,9 @@ using System.Text;
 namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
 {
     /// <summary>
-    /// 测试Xls文件读取器夹具
+    /// 测试工作表读取器夹具基类
     /// </summary>
-    public class TestFileReaderXlsxFixture : IDisposable
+    public abstract class TestSheetReaderFixtureBase : IDisposable
     {
         /// <summary>
         /// Excel文件对象
@@ -77,9 +77,9 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TestFileReaderXlsxFixture()
+        public TestSheetReaderFixtureBase(string file)
         {
-            workbook = WorkbookFactory.Create("TestExcelFiles\\TestXlsxFile.xlsx");
+            workbook = WorkbookFactory.Create(file);
             formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
 
             int i = 0;
@@ -187,11 +187,4 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
             workbook.Dispose();
         }
     }
-
-    /// <summary>
-    /// 夹具集合定义类
-    /// </summary>
-    [CollectionDefinition(nameof(TestFileReaderXlsxCollection))]
-    public class TestFileReaderXlsxCollection : ICollectionFixture<TestFileReaderXlsxFixture>
-    { }
 }

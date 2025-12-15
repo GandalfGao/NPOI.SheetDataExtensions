@@ -19,7 +19,7 @@ namespace NPOI_API_Package
         /// <param name="cell">单元格</param>
         /// <param name="formulaEvaluator">公式评估器对象</param>
         /// <returns>单元格值</returns>
-        public static object GetCellValue(this ICell cell, IFormulaEvaluator? formulaEvaluator = null)
+        public static object GetCellValue(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null)
         {
             //校验cell对象是否为空
             if (cell == null)
@@ -90,7 +90,7 @@ namespace NPOI_API_Package
         /// </summary>
         /// <param name="cell"></param>
         /// <returns></returns>
-        public static bool IsEmpty(this ICell cell)
+        public static bool IsEmpty(this ICell? cell)
         {
             if (cell == null)
             {

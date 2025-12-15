@@ -65,5 +65,49 @@ namespace NPOIExcelTestProject
                 ]
             }
         };
+
+        public static TheoryData<bool, IEnumerable<ColumnConfigAttribute>> HasHeaderAndColumnConfigsParam_WithHasBlankRowsAndCols { get; } = new()
+        {
+            {
+                false,
+                [
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 1,
+                        ColumnMapping = "序号",
+                    },
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 3,
+                        ColumnMapping = "姓名",
+                    },
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 5,
+                        ColumnMapping = "年龄",
+                    },
+                ]
+            },
+            {
+                true,
+                [
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 1,
+                        ColumnMapping = "序号",
+                    },
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 3,
+                        ColumnMapping = "姓名",
+                    },
+                    new ColumnConfigAttribute
+                    {
+                        ColumnIndex = 5,
+                        ColumnMapping = "年龄",
+                    },
+                ]
+            }
+        };
     }
 }
