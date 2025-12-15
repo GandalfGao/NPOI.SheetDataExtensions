@@ -1,6 +1,5 @@
 ﻿using NPOI_API_Package;
 using NPOIExcelTestProject.Fixtures.CollectionFixtures;
-using NPOIExcelTestProject.Params;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -40,7 +39,7 @@ namespace NPOIExcelTestProject.Tests
         /// </summary>
         /// <param name="columnConfigs"></param>
         [Theory]
-        [MemberData(nameof(ColumnConfigData.EmptyColumnConfigParams), MemberType = typeof(ColumnConfigData))]
+        [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
         public void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
         {
             var sheetReader = new SheetReader(testXlsxFileReaderFixture.Sheet3);
@@ -53,7 +52,7 @@ namespace NPOIExcelTestProject.Tests
         /// </summary>
         /// <param name="columnConfigs"></param>
         [Theory]
-        [MemberData(nameof(ColumnConfigData.EmptyColumnConfigParams), MemberType = typeof(ColumnConfigData))]
+        [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
         public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
         {
             var sheetReader = new SheetReader(testXlsxFileReaderFixture.Sheet3);
@@ -88,16 +87,17 @@ namespace NPOIExcelTestProject.Tests
         }
 
         /// <summary>
-        /// 测试当hasHeader为false且columnConfigs不为空集合时的读取结果
+        /// 测试columnConfigs不为空集合时的读取结果
         /// </summary>
         /// <param name="columnConfigs"></param>
         [Theory]
-        [MemberData(nameof(ColumnConfigData.ColumnConfigParams), MemberType = typeof(ColumnConfigData))]
-        public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNotEmpty(IEnumerable<ColumnConfigAttribute> columnConfigs)
+        [MemberData(nameof(ParamsData.HasHeaderAndColumnConfigsParam), MemberType = typeof(ParamsData))]
+        public void Test_Read_WhenColumnConfigsIsNotEmpty(bool hasHeader, IEnumerable<ColumnConfigAttribute> columnConfigs)
         {
             var sheetReader = new SheetReader(testXlsxFileReaderFixture.Sheet3);
             //实际table数据
-            var actualTable = sheetReader.Read(6, firstRowIndex: 2, hasHeader: false, columnConfigs: columnConfigs);
+            int firstRowIndex = hasHeader ? 1 : 2;
+            var actualTable = sheetReader.Read(6, firstRowIndex: firstRowIndex, hasHeader: hasHeader, columnConfigs: columnConfigs);
             //预计table数据
             var expectedTable = CreateExpectedDataTableWithColumnConfigs();
             //校验列数
@@ -110,6 +110,45 @@ namespace NPOIExcelTestProject.Tests
                 Assert.Equal(expectedColumn.ColumnName, actualColumn.ColumnName);
                 Assert.Equal(expectedColumn.DataType, actualColumn.DataType);
             }
+            //校验行数
+            Assert.Equal(expectedTable.Rows.Count, actualTable.Rows.Count);
+            //校验行数据
+            for (int i = 0; i < expectedTable.Rows.Count; i++)
+            {
+                var expectedRow = expectedTable.Rows[i];
+                var actualRow = actualTable.Rows[i];
+                for (int j = 0; j < expectedTable.Columns.Count; j++)
+                {
+                    Assert.Equal(expectedRow[j], actualRow[j]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在工作表中包含空白行和空白列的情况下，测试当hasHeader为true且columnConfigs为null或空集合时的读取结果
+        /// </summary>
+        /// <param name="columnConfigs"></param>
+        [Theory]
+        [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
+        public void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        {
+            var sheetReader = new SheetReader(testXlsxFileReaderFixture.Sheet4);
+            //实际table数据(包含两个空行)
+            var actualTable = sheetReader.Read(6 + 2, firstRowIndex: 1, hasHeader: true, columnConfigs: columnConfigs);
+            //预计table数据
+            var expectedTable = CreateExpectedDataTableWithoutColumnConfigs();
+
+            //校验列数
+            Assert.Equal(expectedTable.Columns.Count, actualTable.Columns.Count);
+            //校验列信息
+            for (int i = 0; i < expectedTable.Columns.Count; i++)
+            {
+                var expectedColumn = expectedTable.Columns[i];
+                var actualColumn = actualTable.Columns[i];
+                Assert.Equal(expectedColumn.ColumnName, actualColumn.ColumnName);
+                Assert.Equal(expectedColumn.DataType, actualColumn.DataType);
+            }
+
             //校验行数
             Assert.Equal(expectedTable.Rows.Count, actualTable.Rows.Count);
             //校验行数据

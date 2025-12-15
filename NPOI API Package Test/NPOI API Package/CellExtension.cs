@@ -1,6 +1,8 @@
-﻿using NPOI.SS.UserModel;
+﻿using NPOI.OpenXmlFormats.Dml;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security;
 using System.Text;
 
@@ -81,6 +83,22 @@ namespace NPOI_API_Package
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// 判断单元格是否为空
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        public static bool IsEmpty(this ICell cell)
+        {
+            if (cell == null)
+            {
+                return true;
+            }
+
+            var val = cell.ToString();
+            return string.IsNullOrEmpty(val);
         }
     }
 }

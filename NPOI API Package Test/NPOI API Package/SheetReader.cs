@@ -31,10 +31,10 @@ namespace NPOI_API_Package
         /// <summary>
         /// 读取数据
         /// </summary>
-        /// <param name="rowsCount">行数</param>
+        /// <param name="rowsCount">数据行数</param>
         /// <param name="firstRowIndex">首行索引(从0开始)</param>
         /// <param name="hasHeader">是否包含头部信息(true: 读取数据时会以firstRowIndex基础上加1访问, false: 读取数据时直接以firstRowIndex基础上访问)</param>
-        /// <param name="columnConfigs">列信息配置集合</param>
+        /// <param name="columnConfigs">列信息配置集合(如果设置列信息配置集合, 即使hasHeader为true, 也采取列信息配置集合中的列信息)</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">当firstRowIndex小于0时抛出</exception>
         /// <exception cref="ArgumentNullException">当hasHeader为false且columnConfigs为null或空时抛出</exception>
@@ -57,12 +57,15 @@ namespace NPOI_API_Package
                 //遍历单元格
                 foreach (ICell cell in headerRow.Cells)
                 {
-                    var colConfig = new ColumnConfigAttribute
-                    { 
-                        ColumnMapping = cell.ToString(),
-                        ColumnIndex = cell.ColumnIndex,
-                    };
-                    tempColumnConfigs.Add(colConfig);
+                    if (!cell.IsEmpty())
+                    {
+                        var colConfig = new ColumnConfigAttribute
+                        {
+                            ColumnMapping = cell.ToString(),
+                            ColumnIndex = cell.ColumnIndex,
+                        };
+                        tempColumnConfigs.Add(colConfig);
+                    }
                 }
 
                 columnConfigs = tempColumnConfigs;
@@ -90,7 +93,7 @@ namespace NPOI_API_Package
             for (int i = startRowIndex; i < rowsCount + startRowIndex; i++)
             {
                 var row = sheet.GetRow(i);
-                if (row != null)
+                if (!row.IsEmpty())
                 {
                     DataRow dataRow = table.NewRow();
                     foreach (var columnConfig in columnConfigs)
