@@ -1,0 +1,73 @@
+﻿using NPOI.SS.UserModel;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+
+namespace NPOI_API_Package
+{
+    /// <summary>
+    /// 工作表写入器
+    /// </summary>
+    public class SheetWriter
+    {
+        /// <summary>
+        /// 工作表对象
+        /// </summary>
+        private readonly ISheet sheet;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="sheet">工作表对象</param>
+        public SheetWriter(ISheet sheet)
+        {
+            this.sheet = sheet;
+        }
+
+        public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true)
+        {
+            //校验首行索引值
+            if (firstRowIndex < 0)
+            {
+                throw new ArgumentException($"无效的首行索引值, firstRowIndex: {firstRowIndex}", nameof(firstRowIndex));
+            }
+
+            int rowIndex = firstRowIndex;
+
+            //如果需要列标题则将其写入到文件中
+            if (hasHader)
+            {
+                //创建行
+                var row = sheet.CreateRow(rowIndex++);
+                //设置列索引
+                int colIndex = 0;
+                //遍历读取dataTable的列信息
+                foreach (DataColumn dataColumn in dataTable.Columns)
+                {
+                    //创建单元格
+                    var cell = row.CreateCell(colIndex++);
+                    //设置单元格值
+                    cell.SetCellValue(dataColumn.ColumnName);
+                }
+            }
+
+            //遍历dataTable行
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                //创建行
+                var row = sheet.CreateRow(rowIndex++);
+                //设置列索引
+                int colIndex = 0;
+                //遍历dataTable列
+                foreach (DataColumn dataColumn in dataTable.Columns)
+                {
+                    //创建单元格
+                    var cell = row.CreateCell(colIndex++);
+                    //获取dataTable单个值
+                    var val = dataRow[dataColumn];
+                }
+            }
+        }
+    }
+}

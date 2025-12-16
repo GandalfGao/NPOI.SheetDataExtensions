@@ -85,6 +85,24 @@ namespace NPOI_API_Package
             return value;
         }
 
+        public static void SetCellValue(this ICell cell, object value)
+        {
+            string val = value.ToString();
+
+            if (bool.TryParse(val, out bool boolVal))
+            {
+                cell.SetCellValue(boolVal);
+            }
+            else if (double.TryParse(val, out double numVal))
+            {
+                cell.SetCellValue(numVal);
+            }
+            else if (DateTime.TryParse(val, out DateTime dtVal))
+            { 
+                cell.SetCellValue(dtVal);
+            }
+        }
+
         /// <summary>
         /// 判断单元格是否为空
         /// </summary>
