@@ -85,9 +85,14 @@ namespace NPOI_API_Package
             return value;
         }
 
+        /// <summary>
+        /// 设置单元格的值
+        /// </summary>
+        /// <param name="cell">单元格</param>
+        /// <param name="value">数值</param>
         public static void SetCellValue(this ICell cell, object value)
         {
-            string val = value.ToString();
+            string val = value?.ToString() ?? string.Empty;
 
             if (bool.TryParse(val, out bool boolVal))
             {
@@ -98,8 +103,17 @@ namespace NPOI_API_Package
                 cell.SetCellValue(numVal);
             }
             else if (DateTime.TryParse(val, out DateTime dtVal))
-            { 
+            {
                 cell.SetCellValue(dtVal);
+            }
+            //字符串开头为等号表示公式
+            else if (val.StartsWith("="))
+            { 
+                cell.SetCellFormula(val.Substring(1));
+            }
+            else
+            {
+                cell.SetCellValue(val);
             }
         }
 
