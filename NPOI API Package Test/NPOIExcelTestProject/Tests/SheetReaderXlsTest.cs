@@ -11,10 +11,10 @@ namespace NPOIExcelTestProject.Tests
     /// <summary>
     /// 工作表读取器测试类
     /// </summary>
-    [Collection(nameof(TestSheetReaderXlsxCollection))]
+    [Collection(nameof(TestSheetXlsFixturesCollection))]
     public class SheetReaderXlsTest : SheetReaderTestBase
     {
-        public SheetReaderXlsTest(TestSheetReaderXlsxFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper) : base(testXlsxFileReaderFixture, outputHelper)
+        public SheetReaderXlsTest(TestSheetReaderXlsFixture testXlsFileReaderFixture, ITestOutputHelper outputHelper) : base(testXlsFileReaderFixture, outputHelper)
         { }
 
         /// <summary>

@@ -16,11 +16,4 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         public TestSheetReaderXlsFixture() : base("TestExcelFiles\\TestXlsFile.xls")
         { }
     }
-
-    /// <summary>
-    /// 夹具集合定义类
-    /// </summary>
-    [CollectionDefinition(nameof(TestSheetReaderXlsCollection))]
-    public class TestSheetReaderXlsCollection : ICollectionFixture<TestSheetReaderXlsFixture>
-    { }
 }

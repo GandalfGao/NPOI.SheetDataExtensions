@@ -9,7 +9,7 @@ namespace NPOIExcelTestProject.Tests
     /// <summary>
     /// xlsx文件工作表行扩展类测试
     /// </summary>
-    [Collection(nameof(TestSheetReaderXlsxCollection))]
+    [Collection(nameof(TestSheetXlsxFixturesCollection))]
     public class RowExtensionXlsxTest : RowExtensionTestBase
     {
         public RowExtensionXlsxTest(TestSheetReaderXlsxFixture testSheetReaderXlsxFixture, ITestOutputHelper outputHelper) : base(testSheetReaderXlsxFixture, outputHelper)

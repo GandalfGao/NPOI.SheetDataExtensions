@@ -10,10 +10,4 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         public TestSheetWriterXlsxFixture() : base(new XSSFWorkbook())
         { }
     }
-
-    /// <summary>
-    /// 夹具集合定义类
-    /// </summary>
-    public class TestSheetWriterXlsxCollection : ICollectionFixture<TestSheetWriterXlsxFixture>
-    { }
 }
