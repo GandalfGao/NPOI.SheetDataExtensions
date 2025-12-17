@@ -23,6 +23,8 @@ namespace NPOIExcelTestProject.Tests
             this.outputHelper = outputHelper;
         }
 
+        #region GetCellValue测试
+
         /// <summary>
         /// 当单元格对象为空时，单元格值应返回空字符串
         /// </summary>
@@ -247,6 +249,30 @@ namespace NPOIExcelTestProject.Tests
                 var cellInfo = $"cell index: {i}, cell type: {cell.CellType}, is date? {DateUtil.IsCellDateFormatted(cell)}, format: {cell.CellStyle.GetDataFormatString()}, date value: {cell.DateCellValue}, str val: {cell}";
                 outputHelper.WriteLine(cellInfo);
             }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region SetCellValue测试
+
+        /// <summary>
+        /// 当单元格对象为空的时候, 应抛出ArgumentNullException
+        /// </summary>
+        public virtual void Test_SetCellValue_WhenCellIsNull()
+        {
+            ICell cell = null!;
+            object val = "test";
+            Assert.Throws<ArgumentNullException>(() => cell.SetCellValue(val));
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为布尔值时, 单元格类型为布尔
+        /// </summary>
+        public virtual void Test_SetCellValue_WhenValueIsBool()
+        {
+            
         }
 
         #endregion

@@ -55,8 +55,11 @@ namespace NPOI_API_Package
                 throw new FileNotFoundException("指定的文件不存在！", file);
             }
 
+            //创建文件流
+            using var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+
             //创建workbook对象
-            var workbook = WorkbookFactory.Create(file);
+            var workbook = WorkbookFactory.Create(fs);
             return workbook;
         }
     }

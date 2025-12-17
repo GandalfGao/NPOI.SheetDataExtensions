@@ -6,7 +6,7 @@ using System.Text;
 namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
 {
     /// <summary>
-    /// 测试Xls文件读取器夹具
+    /// xls测试工作表读取器夹具类
     /// </summary>
     public class TestSheetReaderXlsFixture : TestSheetReaderFixtureBase
     {

@@ -77,6 +77,7 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// <summary>
         /// 构造函数
         /// </summary>
+        /// <param name="file">文件路径</param>
         public TestSheetReaderFixtureBase(string file)
         {
             workbook = WorkbookFactory.Create(file);

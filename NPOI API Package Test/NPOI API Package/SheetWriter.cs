@@ -25,12 +25,27 @@ namespace NPOI_API_Package
             this.sheet = sheet;
         }
 
-        public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true)
+        /// <summary>
+        /// 写入数据
+        /// </summary>
+        /// <param name="dataTable">数据表</param>
+        /// <param name="firstRowIndex">写入的首行索引</param>
+        /// <param name="firstColIndex">写入的首列索引</param>
+        /// <param name="hasHader">是否包含头部</param>
+        /// <param name="setHeaderStyleFunc">设置头部样式委托</param>
+        /// <param name="setContentStyleFunc">设置内容样式委托</param>
+        /// <exception cref="ArgumentException">当首行索引值或首列索引值小于0时抛出</exception>
+        public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true, Action<IEnumerable<ICell>, ISheet>? setHeaderStyleFunc = null, Action<IEnumerable<ICell>, ISheet>? setContentStyleFunc = null)
         {
             //校验首行索引值
             if (firstRowIndex < 0)
             {
                 throw new ArgumentException($"无效的首行索引值, firstRowIndex: {firstRowIndex}", nameof(firstRowIndex));
+            }
+            //校验首列索引值
+            if (firstColIndex < 0)
+            {
+                throw new ArgumentException($"无效的首列索引值, firstColIndex: {firstColIndex}", nameof(firstColIndex));
             }
 
             int rowIndex = firstRowIndex;
@@ -50,6 +65,9 @@ namespace NPOI_API_Package
                     //设置单元格值
                     cell.SetCellValue(dataColumn.ColumnName);
                 }
+
+                //设置头部样式
+                setHeaderStyleFunc?.Invoke(row.Cells, sheet);
             }
 
             //遍历dataTable行
@@ -66,7 +84,12 @@ namespace NPOI_API_Package
                     var cell = row.CreateCell(colIndex++);
                     //获取dataTable单个值
                     var val = dataRow[dataColumn];
+                    //设置单元格值
+                    cell.SetCellValue(val);
                 }
+
+                //设置内容样式
+                setContentStyleFunc?.Invoke(row.Cells, sheet);
             }
         }
     }

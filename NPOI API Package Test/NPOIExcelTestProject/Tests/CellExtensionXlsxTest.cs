@@ -19,6 +19,8 @@ namespace NPOIExcelTestProject.Tests
         public CellExtensionXlsxTest(TestSheetReaderXlsxFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper) : base(testXlsxFileReaderFixture, outputHelper)
         { }
 
+        #region GetCellValue测试
+
         /// <summary>
         /// 当单元格类型为布尔值时，单元格值应返回对应的布尔值
         /// </summary>
@@ -104,5 +106,20 @@ namespace NPOIExcelTestProject.Tests
         {
             base.Test_Output_WhenCellIsTime();
         }
+
+        #endregion
+
+        #region SetCellValue测试
+
+        /// <summary>
+        /// 当单元格对象为空的时候, 应抛出ArgumentNullException
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenCellIsNull()
+        {
+            base.Test_SetCellValue_WhenCellIsNull();
+        }
+
+        #endregion
     }
 }

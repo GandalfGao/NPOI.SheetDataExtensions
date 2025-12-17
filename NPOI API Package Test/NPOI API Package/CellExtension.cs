@@ -89,9 +89,15 @@ namespace NPOI_API_Package
         /// 设置单元格的值
         /// </summary>
         /// <param name="cell">单元格</param>
-        /// <param name="value">数值</param>
+        /// <param name="value">值</param>
+        /// <exception cref="ArgumentNullException">当单元格为null时抛出</exception>
         public static void SetCellValue(this ICell cell, object value)
         {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell), "单元格对象不可以为null！");
+            }
+
             string val = value?.ToString() ?? string.Empty;
 
             if (bool.TryParse(val, out bool boolVal))
