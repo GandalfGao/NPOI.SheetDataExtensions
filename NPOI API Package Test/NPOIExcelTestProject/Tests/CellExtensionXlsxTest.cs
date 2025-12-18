@@ -16,7 +16,8 @@ namespace NPOIExcelTestProject.Tests
     [Collection(nameof(TestSheetXlsxFixturesCollection))]
     public class CellExtensionXlsxTest : CellExtensionTestBase
     {
-        public CellExtensionXlsxTest(TestSheetReaderXlsxFixture testXlsxFileReaderFixture, ITestOutputHelper outputHelper) : base(testXlsxFileReaderFixture, outputHelper)
+        public CellExtensionXlsxTest(TestSheetReaderXlsxFixture testFileReaderXlsxFixture, TestSheetWriterXlsxFixture testSheetWriterXlsxFixture, ITestOutputHelper outputHelper) 
+            : base(testFileReaderXlsxFixture, testSheetWriterXlsxFixture, outputHelper)
         { }
 
         #region GetCellValue测试
@@ -118,6 +119,60 @@ namespace NPOIExcelTestProject.Tests
         public override void Test_SetCellValue_WhenCellIsNull()
         {
             base.Test_SetCellValue_WhenCellIsNull();
+        }
+
+        /// <summary>
+        /// 当单元格的值为NULL时, 应返回空字符串
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValIsNull()
+        {
+            base.Test_SetCellValue_WhenValIsNull();
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为布尔值时, 单元格类型为布尔
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValueIsBool()
+        {
+            base.Test_SetCellValue_WhenValueIsBool();
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为数字时, 单元格类型为数字
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValueIsNum()
+        {
+            base.Test_SetCellValue_WhenValueIsNum();
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为时间时, 单元格类型为数字, 且日期校验为true
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValueIsDateTime()
+        {
+            base.Test_SetCellValue_WhenValueIsDateTime();
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为算式时, 单元格类型为算式
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValueIsFormula()
+        {
+            base.Test_SetCellValue_WhenValueIsFormula();
+        }
+
+        /// <summary>
+        /// 当设置单元格的值类型为字符串时, 单元格类型为字符串
+        /// </summary>
+        [Fact]
+        public override void Test_SetCellValue_WhenValueIsString()
+        {
+            base.Test_SetCellValue_WhenValueIsString();
         }
 
         #endregion

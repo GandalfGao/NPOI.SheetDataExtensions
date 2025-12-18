@@ -19,7 +19,7 @@ namespace NPOI_API_Package
         /// <param name="cell">单元格</param>
         /// <param name="formulaEvaluator">公式评估器对象</param>
         /// <returns>单元格值</returns>
-        public static object GetCellValue(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null)
+        public static object GetValue(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null)
         {
             //校验cell对象是否为空
             if (cell == null)
@@ -37,7 +37,7 @@ namespace NPOI_API_Package
                 }
             }
 
-            var value = cell.GetCellValue(cellType);
+            var value = cell.GetValue(cellType);
             return value;
         }
 
@@ -47,7 +47,7 @@ namespace NPOI_API_Package
         /// <param name="cell">单元格</param>
         /// <param name="cellType">单元格类型</param>
         /// <returns>单元格值</returns>
-        private static object GetCellValue(this ICell cell, CellType cellType)
+        private static object GetValue(this ICell cell, CellType cellType)
         {
             object value;
 
@@ -91,7 +91,7 @@ namespace NPOI_API_Package
         /// <param name="cell">单元格</param>
         /// <param name="value">值</param>
         /// <exception cref="ArgumentNullException">当单元格为null时抛出</exception>
-        public static void SetCellValue(this ICell cell, object value)
+        public static void SetValue(this ICell cell, object value)
         {
             if (cell == null)
             {

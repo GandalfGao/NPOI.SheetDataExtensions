@@ -85,7 +85,7 @@ namespace NPOI_API_Package
                     //获取dataTable单个值
                     var val = dataRow[dataColumn];
                     //设置单元格值
-                    cell.SetCellValue(val);
+                    cell.SetValue(val);
                 }
 
                 //设置内容样式

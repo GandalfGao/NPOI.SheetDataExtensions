@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 
 namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
@@ -15,6 +16,10 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// </summary>
         private readonly IWorkbook workbook;
         /// <summary>
+        /// 公式评估器对象
+        /// </summary>
+        private readonly IFormulaEvaluator formulaEvaluator;
+        /// <summary>
         /// 工作表对象
         /// </summary>
         private readonly ISheet sheet1;
@@ -26,8 +31,20 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         public TestSheetWriterFixtureBase(IWorkbook workbook)
         {
             this.workbook = workbook;
+            this.formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
+
             this.sheet1 = workbook.CreateSheet("测试工作表1");
         }
+
+        /// <summary>
+        /// Excel文件对象属性
+        /// </summary>
+        public IWorkbook Workbook => workbook;
+
+        /// <summary>
+        /// 公式评估器对象属性
+        /// </summary>
+        public IFormulaEvaluator FormulaEvaluator => formulaEvaluator;
 
         /// <summary>
         /// 工作表对象属性
