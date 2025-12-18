@@ -270,7 +270,7 @@ namespace NPOIExcelTestProject.Tests
         }
 
         /// <summary>
-        /// 当单元格的值为NULL时, 应返回空字符串
+        /// 当单元格的值为NULL时, 单元格类型为Blank
         /// </summary>
         public virtual void Test_SetCellValue_WhenValIsNull()
         {
@@ -281,8 +281,7 @@ namespace NPOIExcelTestProject.Tests
             var cell = row.CreateCell(0);
             cell.SetValue(null!);
 
-            Assert.Equal(CellType.String, cell.CellType);
-            Assert.Equal(string.Empty, cell.StringCellValue);
+            Assert.Equal(CellType.Blank, cell.CellType);
         }
 
         /// <summary>

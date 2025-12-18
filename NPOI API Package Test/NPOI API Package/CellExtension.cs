@@ -117,6 +117,11 @@ namespace NPOI_API_Package
             { 
                 cell.SetCellFormula(val.Substring(1));
             }
+            //如果是Null或空字符串时设置为blank
+            else if (string.IsNullOrEmpty(val))
+            {
+                cell.SetBlank();
+            }
             else
             {
                 cell.SetCellValue(val);
