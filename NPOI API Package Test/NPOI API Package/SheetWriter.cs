@@ -36,6 +36,15 @@ namespace NPOI_API_Package
         /// <exception cref="ArgumentException">当首行索引值或首列索引值小于0时抛出</exception>
         public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true, SheetStyleEventProvider? sheetStyleEventProvider = null)
         {
+            if (dataTable == null)
+            {
+                throw new ArgumentNullException(nameof(dataTable), "DataTable参数不可以为null！");
+            }
+            if (dataTable.Columns.Count == 0)
+            {
+                throw new ArgumentException($"DataTable参数列不可以为空！", nameof(dataTable));
+            }
+
             //校验首行索引值
             if (firstRowIndex < 0)
             {
@@ -55,7 +64,7 @@ namespace NPOI_API_Package
                 //创建行
                 var row = sheet.CreateRow(rowIndex++);
                 //设置列索引
-                int colIndex = 0;
+                int colIndex = firstColIndex;
                 //遍历读取dataTable的列信息
                 foreach (DataColumn dataColumn in dataTable.Columns)
                 {
@@ -76,7 +85,7 @@ namespace NPOI_API_Package
                 //创建行
                 var row = sheet.CreateRow(rowIndex++);
                 //设置列索引
-                int colIndex = 0;
+                int colIndex = firstColIndex;
                 //遍历dataTable列
                 foreach (DataColumn dataColumn in dataTable.Columns)
                 {
