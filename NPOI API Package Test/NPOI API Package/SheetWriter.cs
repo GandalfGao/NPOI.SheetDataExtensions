@@ -32,9 +32,9 @@ namespace NPOI_API_Package
         /// <param name="firstRowIndex">写入的首行索引</param>
         /// <param name="firstColIndex">写入的首列索引</param>
         /// <param name="hasHader">是否包含头部</param>
-        /// <param name="sheetStyleEventProvider">工作表样式事件提供器</param>
+        /// <param name="setSheetStyleFunc">设置工作表样式委托</param>
         /// <exception cref="ArgumentException">当首行索引值或首列索引值小于0时抛出</exception>
-        public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true, SheetStyleEventProvider? sheetStyleEventProvider = null)
+        public void Write(DataTable dataTable, int firstRowIndex = 0, int firstColIndex = 0, bool hasHader = true, Action<ISheet>? setSheetStyleFunc = null)
         {
             if (dataTable == null)
             {
@@ -73,9 +73,6 @@ namespace NPOI_API_Package
                     //设置单元格值
                     cell.SetCellValue(dataColumn.ColumnName);
                 }
-
-                //触发设置头部样式事件
-                sheetStyleEventProvider?.OnSetHeaderStyleEvent(row, sheet);
             }
 
             var contentRows = new List<IRow>();
@@ -99,8 +96,9 @@ namespace NPOI_API_Package
                 //添加内容行
                 contentRows.Add(row);
             }
-            //触发设置内容样式事件
-            sheetStyleEventProvider?.OnSetContentStyleEvent(contentRows, sheet);
+
+            //设置样式
+            setSheetStyleFunc?.Invoke(sheet);
         }
     }
 }

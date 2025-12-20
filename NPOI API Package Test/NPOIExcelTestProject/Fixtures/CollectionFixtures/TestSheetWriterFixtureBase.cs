@@ -27,6 +27,18 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         /// 工作表对象
         /// </summary>
         private readonly ISheet sheet2;
+        /// <summary>
+        /// 工作表对象
+        /// </summary>
+        private readonly ISheet sheet3;
+        /// <summary>
+        /// 工作表对象
+        /// </summary>
+        private readonly ISheet sheet4;
+        /// <summary>
+        /// 工作表对象
+        /// </summary>
+        private readonly ISheet sheet5;
 
         /// <summary>
         /// 构造函数
@@ -37,8 +49,11 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
             this.workbook = workbook;
             this.formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
 
-            this.sheet1 = workbook.CreateSheet("测试工作表1");
-            this.sheet2 = workbook.CreateSheet("测试工作表2");
+            this.sheet1 = workbook.CreateSheet("测试设置单元格扩展方法");
+            this.sheet2 = workbook.CreateSheet("测试写入可选参数为默认值时导出");
+            this.sheet3 = workbook.CreateSheet("测试写入首行索引与首列索引大于0");
+            this.sheet4 = workbook.CreateSheet("测试写入不包含头部");
+            this.sheet5 = workbook.CreateSheet("测试写入设置样式");
         }
 
         /// <summary>
@@ -62,6 +77,21 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
         public ISheet Sheet2 => sheet2;
 
         /// <summary>
+        /// 工作表对象属性
+        /// </summary>
+        public ISheet Sheet3 => sheet3;
+
+        /// <summary>
+        /// 工作表对象属性
+        /// </summary>
+        public ISheet Sheet4 => sheet4;
+
+        /// <summary>
+        /// 工作表对象属性
+        /// </summary>
+        public ISheet Sheet5 => sheet5;
+
+        /// <summary>
         /// 存储文件
         /// </summary>
         protected abstract void Save();
@@ -78,6 +108,7 @@ namespace NPOIExcelTestProject.Fixtures.CollectionFixtures
              */
             Save();
 
+            //释放资源
             workbook.Dispose();
         }
     }

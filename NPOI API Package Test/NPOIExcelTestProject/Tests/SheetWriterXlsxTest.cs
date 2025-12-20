@@ -1,4 +1,5 @@
-﻿using NPOIExcelTestProject.Fixtures.CollectionFixtures;
+﻿using NPOI.SS.UserModel;
+using NPOIExcelTestProject.Fixtures.CollectionFixtures;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,6 +51,13 @@ namespace NPOIExcelTestProject.Tests
         public override void Test_Write_WhenFirstColIndexIsNegative()
         {
             base.Test_Write_WhenFirstColIndexIsNegative();
+        }
+
+        [Theory]
+        [MemberData(nameof(ParamsData.WriteToSheetParam), MemberType = typeof(ParamsData))]
+        public override void Test_Write(int sheetIndex, int firstRowIndex, int firstColIndex, bool hasHeader, Action<ISheet>? setSheetStyleFunc)
+        {
+            base.Test_Write(sheetIndex, firstRowIndex, firstColIndex, hasHeader, setSheetStyleFunc);
         }
     }
 }
