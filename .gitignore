@@ -21,3 +21,4 @@ bin-release/
 /NPOI API Package Test/.vs
 /NPOI API Package Test/TestResults
 /NPOI.SheetDataExtensions/.vs
+/NPOI.SheetDataExtensions/TestResults
