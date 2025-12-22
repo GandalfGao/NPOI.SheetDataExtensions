@@ -23,7 +23,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ParamsData.HasHeaderAndColumnConfigsParam), MemberType = typeof(ParamsData))]
-        public override void Test_Read_WhenColumnConfigsIsNotEmpty(bool hasHeader, IEnumerable<ColumnConfigAttribute> columnConfigs)
+        public override void Test_Read_WhenColumnConfigsIsNotEmpty(bool hasHeader, IEnumerable<ColumnConfig> columnConfigs)
         {
             base.Test_Read_WhenColumnConfigsIsNotEmpty(hasHeader, columnConfigs);
         }
@@ -35,7 +35,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ParamsData.HasHeaderAndColumnConfigsParam_WithHasBlankRowsAndCols), MemberType = typeof(ParamsData))]
-        public override void Test_Read_WhenColumnConfigsIsNotEmpty_WithHasBlankRowsAndCols(bool hasHeader, IEnumerable<ColumnConfigAttribute> columnConfigs)
+        public override void Test_Read_WhenColumnConfigsIsNotEmpty_WithHasBlankRowsAndCols(bool hasHeader, IEnumerable<ColumnConfig> columnConfigs)
         {
             base.Test_Read_WhenColumnConfigsIsNotEmpty_WithHasBlankRowsAndCols(hasHeader, columnConfigs);
         }
@@ -55,7 +55,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
-        public override void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public override void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfig>? columnConfigs)
         {
             base.Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(columnConfigs);
         }
@@ -66,7 +66,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
-        public override void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public override void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfig>? columnConfigs)
         {
             base.Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(columnConfigs);
         }
@@ -77,7 +77,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="columnConfigs"></param>
         [Theory]
         [MemberData(nameof(ParamsData.EmptyColumnConfigParams), MemberType = typeof(ParamsData))]
-        public override void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public override void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(IEnumerable<ColumnConfig>? columnConfigs)
         {
             base.Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(columnConfigs);
         }

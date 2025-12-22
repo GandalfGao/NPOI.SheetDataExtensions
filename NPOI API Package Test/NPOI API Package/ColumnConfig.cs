@@ -7,7 +7,7 @@ namespace NPOI_API_Package
     /// <summary>
     /// 列的配置类
     /// </summary>
-    public class ColumnConfigAttribute : Attribute
+    public class ColumnConfig
     {
         /// <summary>
         /// 列映射

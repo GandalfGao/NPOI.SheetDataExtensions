@@ -19,7 +19,7 @@ namespace NPOIExcelTestProject
             setSheetStyleFunc = (sheet) =>
             {
                 //设置合并
-                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 4, 7));
+                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 4, 8));
                 sheet.AddMergedRegion(new CellRangeAddress(0, 1, 0, 0));
                 sheet.AddMergedRegion(new CellRangeAddress(0, 1, 1, 1));
                 sheet.AddMergedRegion(new CellRangeAddress(0, 1, 2, 2));
@@ -89,13 +89,14 @@ namespace NPOIExcelTestProject
                 sheet.SetColumnWidth(colIndex++, 15 * 256);
                 sheet.SetColumnWidth(colIndex++, 15 * 256);
                 sheet.SetColumnWidth(colIndex++, 15 * 256);
+                sheet.SetColumnWidth(colIndex++, 25 * 256);
             };
         }
 
         /// <summary>
         /// 列配置为空的参数集合
         /// </summary>
-        public static TheoryData<IEnumerable<ColumnConfigAttribute>?> EmptyColumnConfigParams { get; } =
+        public static TheoryData<IEnumerable<ColumnConfig>?> EmptyColumnConfigParams { get; } =
         [
             null,
             []
@@ -104,22 +105,22 @@ namespace NPOIExcelTestProject
         /// <summary>
         /// 是否包含头部信息及列配置参数集合参数
         /// </summary>
-        public static TheoryData<bool, IEnumerable<ColumnConfigAttribute>> HasHeaderAndColumnConfigsParam { get; } = new()
+        public static TheoryData<bool, IEnumerable<ColumnConfig>> HasHeaderAndColumnConfigsParam { get; } = new()
         {
             { 
                 false, 
                 [
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 1,
                         ColumnMapping = "序号",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 2,
                         ColumnMapping = "姓名",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 3,
                         ColumnMapping = "年龄",
@@ -129,17 +130,17 @@ namespace NPOIExcelTestProject
             { 
                 true,
                 [
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 1,
                         ColumnMapping = "序号",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 2,
                         ColumnMapping = "姓名",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 3,
                         ColumnMapping = "年龄",
@@ -151,22 +152,22 @@ namespace NPOIExcelTestProject
         /// <summary>
         /// 是否包含头部信息及列配置参数集合参数(包含空列和空行)
         /// </summary>
-        public static TheoryData<bool, IEnumerable<ColumnConfigAttribute>> HasHeaderAndColumnConfigsParam_WithHasBlankRowsAndCols { get; } = new()
+        public static TheoryData<bool, IEnumerable<ColumnConfig>> HasHeaderAndColumnConfigsParam_WithHasBlankRowsAndCols { get; } = new()
         {
             {
                 false,
                 [
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 1,
                         ColumnMapping = "序号",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 3,
                         ColumnMapping = "姓名",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 5,
                         ColumnMapping = "年龄",
@@ -176,17 +177,17 @@ namespace NPOIExcelTestProject
             {
                 true,
                 [
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 1,
                         ColumnMapping = "序号",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 3,
                         ColumnMapping = "姓名",
                     },
-                    new ColumnConfigAttribute
+                    new ColumnConfig
                     {
                         ColumnIndex = 5,
                         ColumnMapping = "年龄",

@@ -38,7 +38,7 @@ namespace NPOI_API_Package
         /// <returns></returns>
         /// <exception cref="ArgumentException">当firstRowIndex小于0时抛出</exception>
         /// <exception cref="ArgumentNullException">当hasHeader为false且columnConfigs为null或空时抛出</exception>
-        public DataTable Read(int rowsCount, int firstRowIndex = 0, bool hasHeader = true, IEnumerable<ColumnConfigAttribute>? columnConfigs = null)
+        public DataTable Read(int rowsCount, int firstRowIndex = 0, bool hasHeader = true, IEnumerable<ColumnConfig>? columnConfigs = null)
         {
             //校验首行索引值
             if (firstRowIndex < 0)
@@ -49,7 +49,7 @@ namespace NPOI_API_Package
             //如果工作表包含头部, 且列配置集合为空, 则自动创建列集合
             if (hasHeader && (columnConfigs == null || !columnConfigs.Any()))
             {
-                var tempColumnConfigs = new List<ColumnConfigAttribute>();
+                var tempColumnConfigs = new List<ColumnConfig>();
 
                 //访问工作表头部信息
                 var headerRow = sheet.GetRow(firstRowIndex);
@@ -59,7 +59,7 @@ namespace NPOI_API_Package
                 {
                     if (!cell.IsEmpty())
                     {
-                        var colConfig = new ColumnConfigAttribute
+                        var colConfig = new ColumnConfig
                         {
                             ColumnMapping = cell.ToString(),
                             ColumnIndex = cell.ColumnIndex,

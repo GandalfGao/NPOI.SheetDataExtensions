@@ -36,7 +36,7 @@ namespace NPOIExcelTestProject.Tests
         /// 测试当hasHeader为false且columnConfigs为null或空集合时抛出异常
         /// </summary>
         /// <param name="columnConfigs"></param>
-        public virtual void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public virtual void Test_Read_WhenHasHeaderIsFalseAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfig>? columnConfigs)
         {
             var sheetReader = new SheetReader(testSheetReaderFixtureBase.Sheet3);
             var ex = Assert.Throws<ArgumentNullException>(() => sheetReader.Read(6, firstRowIndex: 0, hasHeader: false, columnConfigs: columnConfigs));
@@ -47,7 +47,7 @@ namespace NPOIExcelTestProject.Tests
         /// 测试当hasHeader为true且columnConfigs为null或空集合时的读取结果
         /// </summary>
         /// <param name="columnConfigs"></param>
-        public virtual void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public virtual void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty(IEnumerable<ColumnConfig>? columnConfigs)
         {
             var sheetReader = new SheetReader(testSheetReaderFixtureBase.Sheet3);
             //实际table数据
@@ -84,7 +84,7 @@ namespace NPOIExcelTestProject.Tests
         /// 测试columnConfigs不为空集合时的读取结果
         /// </summary>
         /// <param name="columnConfigs"></param>
-        public virtual void Test_Read_WhenColumnConfigsIsNotEmpty(bool hasHeader, IEnumerable<ColumnConfigAttribute> columnConfigs)
+        public virtual void Test_Read_WhenColumnConfigsIsNotEmpty(bool hasHeader, IEnumerable<ColumnConfig> columnConfigs)
         {
             var sheetReader = new SheetReader(testSheetReaderFixtureBase.Sheet3);
             //实际table数据
@@ -120,7 +120,7 @@ namespace NPOIExcelTestProject.Tests
         /// 在工作表中包含空白行和空白列的情况下，测试当hasHeader为true且columnConfigs为null或空集合时的读取结果
         /// </summary>
         /// <param name="columnConfigs"></param>
-        public virtual void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(IEnumerable<ColumnConfigAttribute>? columnConfigs)
+        public virtual void Test_Read_WhenHasHeaderIsTrueAndColumnConfigsIsNullOrEmpty_WithHasBlankRowsAndCols(IEnumerable<ColumnConfig>? columnConfigs)
         {
             var sheetReader = new SheetReader(testSheetReaderFixtureBase.Sheet4);
             //实际table数据(包含两个空行)
@@ -158,7 +158,7 @@ namespace NPOIExcelTestProject.Tests
         /// </summary>
         /// <param name="hasHeader"></param>
         /// <param name="columnConfigs"></param>
-        public virtual void Test_Read_WhenColumnConfigsIsNotEmpty_WithHasBlankRowsAndCols(bool hasHeader, IEnumerable<ColumnConfigAttribute> columnConfigs)
+        public virtual void Test_Read_WhenColumnConfigsIsNotEmpty_WithHasBlankRowsAndCols(bool hasHeader, IEnumerable<ColumnConfig> columnConfigs)
         {
             var sheetReader = new SheetReader(testSheetReaderFixtureBase.Sheet4);
             //实际table数据(包含两个空行)

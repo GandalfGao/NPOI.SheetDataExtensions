@@ -4,6 +4,7 @@ using NPOIExcelTestProject.Fixtures.CollectionFixtures;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using Xunit.Abstractions;
 
@@ -89,7 +90,7 @@ namespace NPOIExcelTestProject.Tests
         /// <param name="setSheetStyleFunc">设置工作表样式委托</param>
         public virtual void Test_Write(int sheetIndex, int firstRowIndex, int firstColIndex, bool hasHeader, Action<ISheet>? setSheetStyleFunc)
         {
-            var dataTable = setSheetStyleFunc == null ? CreateDataTable() : CreateDataTablePlus();
+            var dataTable = setSheetStyleFunc == null ? CreateDataTable() : CreateDataTablePlus(firstRowIndex, firstColIndex);
 
             var type = testSheetWriterFixtureBase.GetType();
             var prop = type.GetProperty($"Sheet{sheetIndex}");
@@ -131,8 +132,41 @@ namespace NPOIExcelTestProject.Tests
                 for (int j = 0; j < dataColumnsCount; j++)
                 {
                     var dataVal = dataRow[dataTable.Columns[j]].ToString();
-                    var val = row.GetCell(columnIndex++).ToString();
-                    Assert.Equal(dataVal, val);
+                    var cell = row.GetCell(columnIndex++);
+                    var val = cell.ToString();
+                    if (cell.CellType != CellType.Formula)
+                    {
+                        Assert.Equal(dataVal, val);
+                    }
+                    else
+                    {
+                        Assert.Equal(dataVal![1..], val);
+                    }
+                }
+            }
+
+            if (setSheetStyleFunc != null)
+            {
+                var sheetReader = new SheetReader(sheet);
+                var resDataTable = sheetReader.Read(7);
+                var colsCount = resDataTable.Columns.Count;
+                var colsList = new List<string>(colsCount);
+                for (int i = 0; i < colsCount; i++)
+                {
+                    colsList.Add(resDataTable.Columns[i].ColumnName);
+                }
+                outputHelper.WriteLine(string.Join(", ", colsList));
+
+                foreach (DataRow row in resDataTable.Rows)
+                {
+                    var list = new List<object>();
+                    for (int i = 0; i < colsCount; i++)
+                    {
+                        var col = resDataTable.Columns[i];
+                        var val = row[col];
+                        list.Add(val);
+                    }
+                    outputHelper.WriteLine(string.Join(", ", list));
                 }
             }
         }
@@ -182,8 +216,16 @@ namespace NPOIExcelTestProject.Tests
         /// 创建DataTable数据
         /// </summary>
         /// <returns></returns>
-        private DataTable CreateDataTablePlus()
+        private DataTable CreateDataTablePlus(int firstRowIndex, int firstColIndex)
         {
+            //设置行数和列数
+            int rowNo = firstRowIndex + 3;
+            int startColNo = firstColIndex + 5;
+            int endColNo = firstRowIndex + 8;
+            //设置列字母的ascii码值
+            char startColCode = (char)(startColNo + 64);
+            char endColCode = (char)(endColNo + 64);
+
             var table = new DataTable("employees");
 
             //添加列
@@ -197,34 +239,35 @@ namespace NPOIExcelTestProject.Tests
             table.Columns.Add("");
             table.Columns.Add("");
             table.Columns.Add("");
+            table.Columns.Add("");
 
             //添加行
             var row1 = table.NewRow();
-            row1.ItemArray = ["", "", "", "", "第一季度", "第二季度", "第三季度", "第四季度"];
+            row1.ItemArray = ["", "", "", "", "第一季度", "第二季度", "第三季度", "第四季度", "今年奖金总数"];
             table.Rows.Add(row1);
 
             var row2 = table.NewRow();
-            row2.ItemArray = ["销售部", 1, "张明伟", 25, 100, 200, 500, 600];
+            row2.ItemArray = ["销售部", 1, "张明伟", 25, 100, 200, 500, 600, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row2);
 
             var row3 = table.NewRow();
-            row3.ItemArray = ["销售部", 2, "王晓琳", 23, 150, 100, 510, 100];
+            row3.ItemArray = ["销售部", 2, "王晓琳", 23, 150, 100, 510, 100, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row3);
 
             var row4 = table.NewRow();
-            row4.ItemArray = ["销售部", 3, "李国华", 26, 80, 120, 400, 300];
+            row4.ItemArray = ["销售部", 3, "李国华", 26, 80, 120, 400, 300, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row4);
 
             var row5 = table.NewRow();
-            row5.ItemArray = ["技术部", 'A', "刘思雨", 22, 180, 220, 440, 170];
+            row5.ItemArray = ["技术部", 'A', "刘思雨", 22, 180, 220, 440, 170, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row5);
 
             var row6 = table.NewRow();
-            row6.ItemArray = ["技术部", 'B', "黄俊杰", 22, 380, 420, 140, 190];
+            row6.ItemArray = ["技术部", 'B', "黄俊杰", 22, 380, 420, 140, 190, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row6);
 
             var row7 = table.NewRow();
-            row7.ItemArray = ["技术部", 'C', "赵雅婷", 24, 310, 240, 430, 930];
+            row7.ItemArray = ["技术部", 'C', "赵雅婷", 24, 310, 240, 430, 930, $"=SUM({startColCode}{rowNo}:{endColCode}{rowNo++})"];
             table.Rows.Add(row7);
 
             return table;
