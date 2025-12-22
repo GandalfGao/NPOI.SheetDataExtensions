@@ -1,0 +1,18 @@
+﻿namespace NPOI.SheetDataExtensions
+{
+    /// <summary>
+    /// 列的配置类
+    /// </summary>
+    public class ColumnConfig
+    {
+        /// <summary>
+        /// 列映射
+        /// </summary>
+        public string ColumnMapping { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 列索引(从0开始)
+        /// </summary>
+        public int ColumnIndex { get; set; }
+    }
+}

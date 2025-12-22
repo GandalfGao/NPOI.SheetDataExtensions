@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11121.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOI.SheetDataExtensions", "NPOI.SheetDataExtensions\NPOI.SheetDataExtensions.csproj", "{DD7D7B7D-C18A-8298-04E4-50CC05C54532}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOI.SheetDataExtensionsTests", "NPOI.SheetDataExtensionsTests\NPOI.SheetDataExtensionsTests.csproj", "{3EBCAC6C-6B78-A0C9-3FFB-65846B4DEE3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD7D7B7D-C18A-8298-04E4-50CC05C54532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7D7B7D-C18A-8298-04E4-50CC05C54532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7D7B7D-C18A-8298-04E4-50CC05C54532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7D7B7D-C18A-8298-04E4-50CC05C54532}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EBCAC6C-6B78-A0C9-3FFB-65846B4DEE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBCAC6C-6B78-A0C9-3FFB-65846B4DEE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBCAC6C-6B78-A0C9-3FFB-65846B4DEE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBCAC6C-6B78-A0C9-3FFB-65846B4DEE3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33733B23-14B3-43C5-9C6B-C36BE0A04521}
+	EndGlobalSection
+EndGlobal
