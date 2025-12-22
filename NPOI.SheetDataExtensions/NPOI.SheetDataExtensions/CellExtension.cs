@@ -84,7 +84,7 @@ namespace NPOI.SheetDataExtensions
         /// 设置单元格的值
         /// </summary>
         /// <param name="cell">单元格</param>
-        /// <param name="value">值</param>
+        /// <param name="value">对象值</param>
         /// <exception cref="ArgumentNullException">当单元格为null时抛出</exception>
         public static void SetValue(this ICell cell, object value)
         {
@@ -93,7 +93,46 @@ namespace NPOI.SheetDataExtensions
                 throw new ArgumentNullException(nameof(cell), "单元格对象不可以为null！");
             }
 
-            string val = value?.ToString() ?? string.Empty;
+            if (value == null)
+            {
+                cell.SetBlank();
+            }
+            else if (value is bool boolVal)
+            {
+                cell.SetCellValue(boolVal);
+            }
+            else if (value.IsNumericType())
+            {
+                cell.SetCellValue(Convert.ToDouble(value));
+            }
+            else if (value is DateTime dt)
+            {
+                cell.SetCellValue(dt);
+            }
+            else if (value is string str)
+            {
+                cell.SetValue(str);
+            }
+            else
+            {
+                cell.SetValue(value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 设置单元格的值
+        /// </summary>
+        /// <param name="cell">单元格</param>
+        /// <param name="value">字符串值</param>
+        /// <exception cref="ArgumentNullException">当单元格为null时抛出</exception>
+        public static void SetValue(this ICell cell, string value)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell), "单元格对象不可以为null！");
+            }
+
+            string val = value ?? string.Empty;
 
             if (bool.TryParse(val, out bool boolVal))
             {
@@ -110,10 +149,10 @@ namespace NPOI.SheetDataExtensions
             //字符串开头为等号表示公式
             else if (val.StartsWith("="))
             { 
-                cell.SetCellFormula(val.Substring(1));
+                cell.SetCellFormula(val[1..]);
             }
-            //如果是Null或空字符串时设置为blank
-            else if (string.IsNullOrEmpty(val))
+            //如果是空字符串时设置为blank
+            else if (val == string.Empty)
             {
                 cell.SetBlank();
             }
@@ -121,6 +160,20 @@ namespace NPOI.SheetDataExtensions
             {
                 cell.SetCellValue(val);
             }
+        }
+
+        /// <summary>
+        /// 判断对象是否为数值类型
+        /// </summary>
+        /// <param name="obj">对象值</param>
+        /// <returns></returns>
+        private static bool IsNumericType(this object obj)
+        {
+            return obj is byte || obj is sbyte ||
+                   obj is short || obj is ushort ||
+                   obj is int || obj is uint ||
+                   obj is long || obj is ulong ||
+                   obj is float || obj is double || obj is decimal;
         }
 
         /// <summary>

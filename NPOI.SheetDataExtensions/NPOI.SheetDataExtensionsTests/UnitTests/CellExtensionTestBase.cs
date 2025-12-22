@@ -265,8 +265,11 @@ namespace NPOI.SheetDataExtensionsTests.UnitTests
         public virtual void Test_SetCellValue_WhenCellIsNull()
         {
             ICell cell = null!;
-            object val = "test";
-            Assert.Throws<ArgumentNullException>(() => cell.SetValue(val));
+            object obj = new();
+            Assert.Throws<ArgumentNullException>(() => cell.SetValue(obj));
+            string str = "Test";
+            Assert.Throws<ArgumentNullException>(() => cell.SetValue(str));
+
         }
 
         /// <summary>
@@ -278,10 +281,15 @@ namespace NPOI.SheetDataExtensionsTests.UnitTests
 
             var row = sheet.CreateRow(0);
 
-            var cell = row.CreateCell(0);
-            cell.SetValue(null!);
+            var cell1 = row.CreateCell(0);
+            object obj = null!;
+            cell1.SetValue(obj);
+            Assert.Equal(CellType.Blank, cell1.CellType);
 
-            Assert.Equal(CellType.Blank, cell.CellType);
+            var cell2 = row.CreateCell(1);
+            string str = null!;
+            cell2.SetValue(str);
+            Assert.Equal(CellType.Blank, cell2.CellType);
         }
 
         /// <summary>
@@ -396,6 +404,12 @@ namespace NPOI.SheetDataExtensionsTests.UnitTests
             var row = sheet.CreateRow(5);
             var cell = row.CreateCell(0);
             cell.SetValue("Test");
+            Assert.Equal(CellType.String, cell.CellType);
+            Assert.Equal("Test", cell.StringCellValue);
+
+            var cell2 = row.CreateCell(1);
+            object val = "Test";
+            cell2.SetValue(val);
             Assert.Equal(CellType.String, cell.CellType);
             Assert.Equal("Test", cell.StringCellValue);
         }
