@@ -51,9 +51,9 @@ namespace NPOIExcelTestProject
                 //设置文字字体
                 var headerFont = workbook.CreateFont();
                 headerFont.FontName = "华文行楷";
-                headerFont.FontHeight = 20;
+                headerFont.FontHeight = 20 * 20;
                 headerFont.IsBold = true;
-                headerCellStyle.SetFont(font);
+                headerCellStyle.SetFont(headerFont);
                 //设置单元格边框
                 headerCellStyle.BorderTop = BorderStyle.Thin;     // 上边框
                 headerCellStyle.BorderRight = BorderStyle.Thin;   // 右边框
