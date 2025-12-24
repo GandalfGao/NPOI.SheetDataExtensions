@@ -74,7 +74,6 @@ namespace NPOI.SheetDataExtensions
                 }
             }
 
-            var contentRows = new List<IRow>();
             //遍历dataTable行
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -92,8 +91,6 @@ namespace NPOI.SheetDataExtensions
                     //设置单元格值
                     cell.SetValue(val);
                 }
-                //添加内容行
-                contentRows.Add(row);
             }
 
             //设置样式
