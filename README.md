@@ -28,8 +28,8 @@
 ### 创建工作簿
 
 ```csharp
-IWorkbook workbook = WorkbookCreater.Create(ExcelType.HSSF); // 创建 .xls 文件
-IWorkbook workbookXlsx = WorkbookCreater.Create(ExcelType.XSSF); // 创建 .xlsx 文件
+IWorkbook workbook = WorkbookCreater.Create(ExcelType.Xls); // 创建 .xls 文件
+IWorkbook workbookXlsx = WorkbookCreater.Create(ExcelType.Xlsx); // 创建 .xlsx 文件
 ```
 
 ### 读取工作表数据
