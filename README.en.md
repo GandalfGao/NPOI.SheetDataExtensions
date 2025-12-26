@@ -24,8 +24,8 @@
 ### Create a Workbook
 
 ```csharp
-IWorkbook workbook = WorkbookCreater.Create(ExcelType.HSSF); // Create .xls file
-IWorkbook workbookXlsx = WorkbookCreater.Create(ExcelType.XSSF); // Create .xlsx file
+IWorkbook workbook = WorkbookCreater.Create(ExcelType.Xls); // Create .xls file
+IWorkbook workbookXlsx = WorkbookCreater.Create(ExcelType.Xlsx); // Create .xlsx file
 ```
 
 ### Read Worksheet Data
